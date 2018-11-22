@@ -59,7 +59,7 @@ def work():
         msg.attach(MIMEText(
             _template_env.get_template(
                 'mail_%s.html' % _user_type
-            ).render(),
+            ).render({'name': data.get('nomCliente', '')}),
             'html',
             'utf-8'
         ))
