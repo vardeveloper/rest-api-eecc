@@ -32,7 +32,8 @@ class ECGenerator(object):
         self._fonts = {}
 
     def _get_font(self, font, size):
-        font_name = os.path.splitext(font.lower())[0]
+        font = font.lower()
+        font_name = os.path.splitext(font)[0]
         if self._fonts.get(font_name, None) is None:
             self._fonts.update({
                 font_name: {
