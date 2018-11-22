@@ -1,3 +1,6 @@
+import os
+
+
 DEBUG = False
 XSRF_COOKIES = False
 DATABASE_DSN = ''
@@ -5,6 +8,11 @@ DATABASE_DSN = ''
 EMAIL_SUBJECT = 'Estado de Cuenta - APP'
 EMAIL_FROM = 'estadodecuenta@profuturo.com.pe'
 EMAIL_FROM_NAME = 'Profuturo AFP'
+
+_local_path = os.path.dirname(__file__)
+STATIC_PATH = os.path.join(_local_path, 'static')
+STATIC_URL_PREFIX = '/static/'
+TEMPLATE_PATH = os.path.join(_local_path, 'templates')
 
 TOKEN_EXPIRATION = 60 * 30
 API_URL = 'http://apiuatw.profuturo.com.pe/serviciosexternos/srvpf/eecc/'

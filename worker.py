@@ -6,6 +6,7 @@ from tornado.escape import json_decode
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
+from jinja2 import Environment, FileSystemLoader
 
 import os
 
@@ -55,7 +56,13 @@ def work():
         )
         msg['To'] = email
         msg['Subject'] = settings.EMAIL_SUBJECT
-        msg.attach(MIMEText(':)', 'plain', 'utf-8'))
+        msg.attach(MIMEText(
+            _template_env.get_template(
+                'mail_%s.html' % _user_type
+            ).render(),
+            'html',
+            'utf-8'
+        ))
 
         part = MIMEApplication(res, Name='estadodecuenta.pdf')
         part['Content-Disposition'] = 'attachment; filename=estadodecuenta.pdf'
@@ -67,6 +74,13 @@ def work():
 
 
 if __name__ == '__main__':
+    _template_env = Environment(
+        loader=FileSystemLoader(
+            os.path.join(os.path.dirname(__file__), 'templates')
+        ),
+        auto_reload=settings.DEBUG,
+        extensions=['jinja2.ext.do']
+    )
     sqs = boto3.resource('sqs')
     sqs_queue = sqs.get_queue_by_name(
         QueueName=os.environ.get('SQS_QUEUE_NAME')
