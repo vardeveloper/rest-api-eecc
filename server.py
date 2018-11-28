@@ -30,9 +30,16 @@ class RequestHandler(tornado.web.RequestHandler):
 class ViewEC(RequestHandler):
 
     def get(self):
+        options = {
+            'margin-top': '0in',
+            'margin-bottom': '0in',
+            'margin-left': '0in',
+            'margin-right': '0in'
+        }
         data = pdfkit.from_string(
             self.render_string('flujo-normal.html'),
-            False
+            False,
+            options=options
         )
         self.set_header('Content-Type', 'application/pdf')
         self.set_header('Content-Length', len(data))
