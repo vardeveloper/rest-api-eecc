@@ -1,0 +1,57 @@
+#resume_spp {
+  #icon-1 {
+    width: 17px;
+    height: 17px;
+    display: inline-block;
+    margin-right: 7px;
+    position: relative;
+    top: 2px;
+  }
+}
+
+#resume-spp-table {
+  position: relative;
+
+  .icon {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    top: 50%;
+    margin-top: -12px;
+    margin-left: -12px;
+  }
+}
+
+#icon-minus {
+  left: 25%;
+}
+
+#icon-plus {
+  left: 50%;
+}
+
+#icon-equal {
+  left: 75%;
+}
+
+#resume-spp-table-cont {
+  width: 100%;
+
+  sup {
+    padding: 0 0 0 5px;
+  }
+
+
+  td {
+    width: 25%;
+
+    span {
+      display: block;
+      text-align: center;
+    }
+
+    .title {
+      padding: 0 0 10px;
+    }
+  }
+}

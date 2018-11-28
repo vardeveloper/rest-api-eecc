@@ -1,0 +1,25 @@
+#resume {
+  table {
+    width: 100%;
+  }
+
+  .link-content {
+    width: 96px;
+    font-size: 12px;
+    line-height: 14px;
+    padding: 12px 4px;
+    border-bottom: 1px solid $color4;
+  }
+
+  td {
+    text-align: center;
+  }
+
+  td.title {
+    text-align: left;
+  }
+
+  td.group-title {
+    text-align: center;
+  }
+}

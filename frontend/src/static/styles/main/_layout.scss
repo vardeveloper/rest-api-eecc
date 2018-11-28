@@ -1,0 +1,109 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-size: 1rem;
+  background: #FFF;
+  color: $color2;
+  font-family: 'DINPro', Arial, Helvetica, sans-serif;
+}
+
+#wrap {
+  width: 100%;
+  max-width: 1024px;
+}
+
+.inner {
+  width: 90.69%;
+  margin: 0 auto;
+}
+
+.title {
+  color: $color1;
+  font-weight: 500;
+}
+
+.group-title {
+  text-align: center;
+}
+
+td.link-content {
+  background-color: $color3;
+  text-align: center;
+
+  a {
+    color: $color1;
+  }
+}
+
+h1 {
+  @include title;
+  font-weight: normal;
+  // margin: 0 0 21px;
+  margin: 0 0 17px;
+}
+
+.section {
+  // padding: 21px 0 0;
+  padding: 14px 0 0;
+}
+
+small, .small {
+  font-size: 13px;
+  line-height: 15px;
+}
+
+small {
+  display: inherit;
+}
+
+table
+{
+  td {
+    border-color: $color4;
+    border: 1px solid $color4;
+    border-bottom: none;
+    padding: 11px 12px;
+    box-sizing: border-box;
+    @include title;
+  }
+
+  tr:last-child td {
+    border-bottom: 1px solid $color4;
+  }
+
+  // cell tipo 1
+  .c1 {
+    padding: 8px 5px 8px 10px;
+  }
+}
+
+#alert-1 {
+  .cls-1 {
+    fill: $color1;
+  }
+  .cls-2 {
+    fill: #FFFFFF;
+  }
+}
+
+#minus-1 {
+  .cls-1 {
+    fill: $color1;
+  }
+}
+
+#plus-1 {
+  .cls-1 {
+    fill: $color1;
+  }
+}
+
+#equal-1 {
+  .cls-1 {
+    fill: $color1;
+  }
+}

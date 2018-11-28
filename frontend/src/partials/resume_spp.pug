@@ -1,0 +1,43 @@
+#resume_spp.section
+  .inner
+    h1
+      span.title Resumen de tu cuenta en el Sistema Privado de Pensiones 
+      small( style='display: inline;') (Del dd/mm/aaaa al dd/mm/aaaa)
+
+    p
+      span#icon-1
+        include ../svg/icon-1.svg
+      | Esta información es sobre los Aportes Obligatorios y Aportes Voluntarios Con Fin Previsional.
+
+    #resume-spp-table
+      .icon#icon-minus
+        include ../svg/icon-2.svg
+      .icon#icon-plus
+        include ../svg/icon-3.svg
+      .icon#icon-equal
+        include ../svg/icon-4.svg
+
+      table#resume-spp-table-cont(
+        cellpadding='0'
+        cellspacing='0'
+        border='0'
+      )
+        tr
+          td
+            span.title.small Aportes SPP
+              sup 2
+
+            span.small S/ 29,000.00
+
+          td
+            span.title.small Retiros y Cargos SPP
+              sup 3
+            span.small S/ 29,000.00
+
+          td
+            span.title.small Rentabilidad SPP
+            span.small S/ 29,000.00
+
+          td
+            span.title.small Saldo SPP
+            span.small S/ 29,000.00

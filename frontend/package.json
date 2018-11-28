@@ -1,0 +1,36 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dist": "..",
+  "scripts": {
+    "test": "abby live",
+    "clean": "rm -fr $npm_package_dist/static/styles; mkdir -p $npm_package_dist/static/styles",
+    "live": "live-server $(echo $npm_package_dist)/templates/ --no-browser --host=0.0.0.0 --port=8000 --mount=/static/images:$(echo $npm_package_dist)/static/images --mount=/static/styles:$(echo $npm_package_dist)/static/styles --mount=/static/fonts:$(echo $npm_package_dist)/static/fonts",
+    "styles": "sass ./src/static/styles/:$npm_package_dist/static/styles/ --load-path=./node_modules",
+    "templates": "pug ./src/templates --out $npm_package_dist/templates -O handler.js",
+    "mailing": "./node_modules/.bin/juice $npm_package_dist/templates/mail/index.src.html $npm_package_dist/templates/mail/clave_web.html",
+    "scripts": "webpack --config webpack.config.js",
+    "scripts:watch": "webpack --config webpack.config.js --watch",
+    "styles:watch": "npm run styles -- --watch",
+    "templates:watch": "npm run templates -- -w",
+    "serve": "npm run clean; npm run styles; abby styles:watch templates:watch live",
+    "deploy": "npm run clean; npm run styles -- -s compressed; ENV=production npm run templates -- --deploy;"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "abigail": "^1.9.5",
+    "juice": "^5.0.0",
+    "live-server": "^1.2.0",
+    "pug-cli": "^1.0.0-alpha6",
+    "sass": "^1.14.2",
+    "ts-loader": "^5.2.2",
+    "typescript": "^3.1.3",
+    "uglifyjs-webpack-plugin": "^2.0.1",
+    "webpack": "^4.20.2",
+    "webpack-command": "^0.4.1"
+  }
+}

@@ -1,0 +1,70 @@
+#header {
+  padding-top: 17px;
+  padding-bottom: 19px;
+  border-bottom: 1px solid $color4;
+}
+
+#logo {
+  width: 334px;
+  height: 82px;
+  margin-bottom: 19px;
+
+  .b {
+    fill: $color1;
+  }
+}
+
+#profile {
+  width: 58.40%;
+  // width: 62%;
+
+  small {
+    display: block;
+  }
+}
+
+#profile-static {
+  width: 40.84%;
+  // width: 39%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 1px solid $color3;
+  box-sizing: border-box;
+}
+
+#profile-static-header {
+  padding: 13px 21px;
+
+  .title {
+    @include title;
+  }
+
+  span {
+    display: block;
+    font-size: 15px;
+  }
+}
+
+#profile-static-highlight {
+  padding: 6px 21px;
+  background-color: $color3;
+
+  span {
+    display: block;
+    font-size: 30px;
+  }
+}
+
+#profile-static-footer {
+  padding: 13px 21px;
+}
+
+#profile-content {
+  padding-top: 0;
+
+  .inner {
+    position: relative;
+  }
+}
