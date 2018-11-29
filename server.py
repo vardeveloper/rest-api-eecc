@@ -2,6 +2,7 @@ import tornado.web
 from tornado.options import define, options, parse_command_line
 import tornado.httpclient
 from tornado.escape import json_decode
+from tornado.gen import coroutien
 from jinja2 import Environment, FileSystemLoader
 import pdfkit
 from PyPDF2 import PdfFileReader, PdfFileWriter
@@ -40,10 +41,12 @@ class Application(tornado.web.Application):
             auto_reload=self.settings.get('debug'),
             extensions=['jinja2.ext.do']
         )
-        self._token = None
 
 
 class RequestHandler(tornado.web.RequestHandler):
+
+    _token = None
+    _http_client = None
 
     @property
     def public_key(self):
@@ -66,6 +69,7 @@ class RequestHandler(tornado.web.RequestHandler):
 class ViewEC(RequestHandler):
 
     # @authenticated
+    @coroutine
     def get(self):
         _doc_type = self.get_argument('doc_type')
         _doc_number = self.get_argument('doc_number')
