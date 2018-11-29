@@ -1,8 +1,14 @@
 backports-abc==0.5
+ecdsa==0.13
+future==0.17.1
 futures==3.2.0
 Jinja2==2.10
 MarkupSafe==1.1.0
 pdfkit==0.6.1
+pyasn1==0.4.4
+PyPDF2==1.26.0
+python-jose==3.0.1
+rsa==4.0
 singledispatch==3.4.0.3
 six==1.11.0
 tornado==5.1.1
