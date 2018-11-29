@@ -34,9 +34,11 @@
     text-transform: uppercase;
   }
 
-  ol {
+  .message {
     margin: 0;
     padding: 0 0 0 14px;
+    font-size: 10px;
+    line-height: 12px;
   }
 
   li {

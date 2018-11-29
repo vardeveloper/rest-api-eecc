@@ -7,11 +7,8 @@
   #nota-content
     #nota-inner
       h1.title Notas
-      ol
-        li Importe cobrado por prima de seguro. Si eres trabajador independiente, te informamos que aquellos aportes que has realizado por una remuneraci&oacute;n menor a la remuneraci&oacute;n m&iacute;nima vital vigente a la fecha del pago, podr&iacute;a afectuar la cobertura del seguro de invalidez y sobrevivencia.
-        li Es la sumatoria de todos los movimientos positivos que se efectuaron en tu cuenta de Aportes Obligatorios y Aportes Voluntarios Con Fin Previsional, tanto en tus anteriores AFP como en Profuturo.
-        li Es la sumatoria de todos los movimientos negativos (Retiro 25%, Retiro 95.5%, Transferencia de Fondos al Exterior, Solicitud de devoluci&oacute;n, entre otros) que se efectuaron en tu cuenta de Aportes Obligatorios y Aportes Voluntarios Con Fin Previsional, tanto en tus anteriores AFP como en Profuturo. No incluye el cobro de comisi&oacute;n por saldo.
-        li El presente Estado de Cuenta corresponde al periodo de aporte de {FECHA INICIO (setiembre de 2018)} con fecha de pago hasta el {FECHA DE PAGO (31 de octubre 2018)}.
-        li Si tienes cincuenta [50] o m&aacute;s a&ntilde;os de edad, ingresa a nuestra Web, ll&aacute;manos al 215-2828 o ac&eacute;rcate a una de nuestras agencias para brindarte informaci&oacute;n respecto a los beneficios y pensiones que ofrece el Sistema Privado de Pensiones.
-        li Si eres trabajador independiente te invitamos a ingresar a nuestra Web en la que encontrar&aacute;s informaci&oacute;n muy importante, incluyendo las condiciones para realizar tus aportes. Accede a tu informaci&oacute;n personal ingresando a www.profuturo.com.pe a trav&eacute;s de tu Zona Privada. En caso de acceder por primera vez colocar tu DNI como c&oacute;digo de usuario y tu Clave Web.
-        li Puedes consultar los valores comparativos de las comisiones por AFP, primas de seguro y la rentabilidad de los fondos en www.sbs.gob.pe/rentabilidad-y-comisiones y www.asociacionafp.com.pe
+      .message
+        |{% for item in handler.get_param(data, 'MENSAJES') %}
+        | {{ item }}
+        br
+        |{% endfor %}

@@ -72,10 +72,15 @@ table
   td {
     border-color: $color4;
     border: 1px solid $color4;
+    border-right: none;
     border-bottom: none;
     padding: 11px 12px;
     box-sizing: border-box;
     @include title;
+  }
+
+  td:last-child {
+    border-right: 1px solid $color4;
   }
 
   tr:last-child td {

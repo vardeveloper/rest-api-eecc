@@ -19,8 +19,16 @@
           td( colspan='4' )
             small.title Direcci&oacute;n:
             small( style='display:block') 
-              | {{data.desDirecc1}}
-              | {{data.desDirecc2}}
+              |{% if data.desDirecc1 %}
+              |{{data.desDirecc1}}
+              br
+              |{% endif %}
+
+              |{% if data.desDirecc2 %}
+              |{{data.desDirecc2}}
+              br
+              |{% endif %}
+
               | {{data.desDirecc3}}
         
         tr

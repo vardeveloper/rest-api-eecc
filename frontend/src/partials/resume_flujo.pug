@@ -19,7 +19,7 @@
           br
           | Obligatorios 
           br
-          a( href='' ) aqu&iacute;
+          a( href='https://folleteria.profuturo.com.pe/aprende-como-leer-tu-estado-de-cuenta/aportes-obligatorio' target='_blank' ) aqu&iacute;
 
         td.group-title.title.small( colspan='7' )
           | Aportes Obligatorios
@@ -58,8 +58,20 @@
 
         td.small {{data.saldoOblInaf}}
 
-    br
 
+    |{% if
+    | (data.aporteVcf and data.aporteVcf != '0.00') or
+    | (data.cargosVcf and data.cargosVcf != '0.00') or
+    | (data.rendimientoVcf and data.rendimientoVcf != '0.00') or
+    | (data.comisionVcf and data.comisionVcf != '0.00') or
+    | (data.saldoVcf and data.saldoVcf != '0.00') or
+    | (data.aporteVsf and data.aporteVsf != '0.00') or
+    | (data.cargosVsf and data.cargosVsf != '0.00') or
+    | (data.rendimientoVsf and data.rendimientoVsf != '0.00') or
+    | (data.comisionVsf and data.comisionVsf != '0.00') or
+    | (data.saldoVsf and data.saldoVsf != '0.00')
+    | %}
+    br
     table#resume-apv.resume-table(
       cellpadding='0'
       cellspacing='0'
@@ -75,7 +87,7 @@
           br
           | Voluntarios  
           br
-          a( href='' ) aqu&iacute;
+          a( href='https://folleteria.profuturo.com.pe/aprende-como-leer-tu-estado-de-cuenta/aportes-voluntarios ' target='blank' ) aqu&iacute;
 
         td.group-title.title.small( colspan='7' )
           | Aportes Voluntarios
@@ -97,6 +109,13 @@
 
         td.small( style="width: 11%;" ) Saldo Actual S/
         
+      |{% if
+      | (data.aporteVcf and data.aporteVcf != '0.00') or
+      | (data.cargosVcf and data.cargosVcf != '0.00') or
+      | (data.rendimientoVcf and data.rendimientoVcf != '0.00') or
+      | (data.comisionVcf and data.comisionVcf != '0.00') or
+      | (data.saldoVcf and data.saldoVcf != '0.00')
+      | %}
       tr
         td.title.small Con Fin Previsional
 
@@ -111,7 +130,15 @@
         td.small {{data.comisionVcf}}
 
         td.small {{data.saldoVcf}}
+      |{% endif %}
         
+      |{% if
+      | (data.aporteVsf and data.aporteVsf != '0.00') or
+      | (data.cargosVsf and data.cargosVsf != '0.00') or
+      | (data.rendimientoVsf and data.rendimientoVsf != '0.00') or
+      | (data.comisionVsf and data.comisionVsf != '0.00') or
+      | (data.saldoVsf and data.saldoVsf != '0.00')
+      | %}
       tr
         td.title.small Sin Fin Previsional
 
@@ -126,9 +153,15 @@
         td.small {{data.comisionVsf}}
 
         td.small {{data.saldoVsf}}
+      |{% endif %}
+    |{% endif %}
 
+    |{% if 
+    | (data.bonoSituacion and data.bonoSituacion != '0.00') or
+    | (data.bonoNominal and data.bonoNominal != '0.00') or
+    | (data.bonoActualizado and data.bonoActualizado != '0.00')
+    |%}
     br
-
     table#resume-bono.resume-table(
       cellpadding='0'
       cellspacing='0'
@@ -140,7 +173,7 @@
           br 
           | Bono de Reconocimiento
           br
-          a( href='' ) aqu&iacute;
+          a( href='https://folleteria.profuturo.com.pe/aprende-como-leer-tu-estado-de-cuenta/bono-de-reconocimiento ' target='_blank' ) aqu&iacute;
 
         td.group-title.title.small( colspan='7' )
           | Bono de Reconocimiento
@@ -158,3 +191,5 @@
         td.small {{data.bonoNominal}}
 
         td.small {{data.bonoActualizado}}
+
+    |{% endif %}
