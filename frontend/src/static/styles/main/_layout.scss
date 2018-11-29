@@ -69,11 +69,10 @@ small {
 
 table
 {
+  border-collapse: collapse;
+
   td {
-    border-color: $color4;
     border: 1px solid $color4;
-    border-right: none;
-    border-bottom: none;
     padding: 11px 12px;
     box-sizing: border-box;
     @include title;
@@ -118,4 +117,8 @@ table
   .cls-1 {
     fill: $color1;
   }
+}
+
+tr, img, .section {
+  page-break-inside: avoid;
 }

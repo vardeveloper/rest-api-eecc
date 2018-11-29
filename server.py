@@ -154,8 +154,8 @@ class ViewEC(RequestHandler):
                 False,
                 options={
                     'page-size': 'A4',
-                    'margin-top': '0in',
-                    'margin-bottom': '0in',
+                    'margin-top': '0.25in',
+                    'margin-bottom': '0.1in',
                     'margin-left': '0in',
                     'margin-right': '0in',
                     'no-outline': None
@@ -317,7 +317,7 @@ if __name__ == '__main__':
             ),
             'profuturo_api': 'http://apiuatw.profuturo.com.pe/'
             'serviciosexternos/',
-            'email_from': 'estadodecuenta@profuturo.com.pe'
+            'email_from': 'estadodecuenta@profuturo.com.pe',
             'email_subject': 'Estado de Cuenta - Profuturo AFP'
         }
     )
