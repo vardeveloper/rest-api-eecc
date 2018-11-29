@@ -5,6 +5,10 @@
     display: block;
   }
 
+  a:hover {
+    background: none;
+  }
+
   img {
     display: block;
     width: 100%;
@@ -27,6 +31,7 @@
   h1 {
     margin: 0 0 6px;
     font-size: 17px;
+    text-transform: uppercase;
   }
 
   ol {

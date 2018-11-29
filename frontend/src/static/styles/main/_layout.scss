@@ -42,8 +42,15 @@ td.link-content {
 h1 {
   @include title;
   font-weight: normal;
-  // margin: 0 0 21px;
+  margin: 0;
+}
+
+.title-content {
   margin: 0 0 17px;
+
+  h1 {
+    display: inline;
+  }
 }
 
 .section {
