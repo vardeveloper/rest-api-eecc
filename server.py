@@ -106,11 +106,9 @@ class RequestHandler(tornado.web.RequestHandler):
 
 class ViewEC(RequestHandler):
 
-    # @authenticated
+    @authenticated
     @coroutine
     def get(self):
-        _doc_type = self.get_argument('doc_type')
-        _doc_number = self.get_argument('doc_number')
         _period = self.get_argument('period')
         try:
             datetime.strptime(_period, '%Y%m')
@@ -121,9 +119,8 @@ class ViewEC(RequestHandler):
             req = yield self.http_client.fetch(
                 self.settings.get('profuturo_api') +
                 'srvpf/eecc/' +
-                _doc_type + '/' + _doc_number + '/' +
-                # self._token.get('tipoDocumento') + '/' +
-                # self._token.get('user_name') + '/' +
+                self._token.get('tipoDocumento') + '/' +
+                self._token.get('user_name') + '/' +
                 _period
             )
             if req.error:
@@ -165,7 +162,7 @@ class ViewEC(RequestHandler):
         _input_reader = PdfFileReader(_input)
         _output_writer = PdfFileWriter()
         _output_writer.appendPagesFromReader(_input_reader)
-        # _output_writer.encrypt(self._token.get('user_name'))
+        _output_writer.encrypt(self._token.get('user_name'))
         _output = StringIO()
         _output_writer.write(_output)
         _output.seek(0)
@@ -180,11 +177,9 @@ class ViewEC(RequestHandler):
 
 class EmailEC(RequestHandler):
 
-    # @authenticated
+    @authenticated
     @coroutine
     def get(self):
-        _doc_type = self.get_argument('doc_type')
-        _doc_number = self.get_argument('doc_number')
         _period = self.get_argument('period')
         try:
             datetime.strptime(_period, '%Y%m')
@@ -196,10 +191,8 @@ class EmailEC(RequestHandler):
                 self.settings.get('profuturo_api') +
                 'Home/GenClave_DatosBasico/?' +
                 urllib.urlencode({
-                    'tipoDocumento': _doc_type,
-                    'numeroDocumento': _doc_number,
-                    # 'tipoDocumento': self._token.get('tipoDocumento'),
-                    # 'numeroDocumento': self._token.get('user_name')
+                    'tipoDocumento': self._token.get('tipoDocumento'),
+                    'numeroDocumento': self._token.get('user_name')
                 })
             )
             if req.error:
@@ -215,9 +208,8 @@ class EmailEC(RequestHandler):
             req = yield self.http_client.fetch(
                 self.settings.get('profuturo_api') +
                 'srvpf/eecc/' +
-                _doc_type + '/' + _doc_number + '/' +
-                # self._token.get('tipoDocumento') + '/' +
-                # self._token.get('user_name') + '/' +
+                self._token.get('tipoDocumento') + '/' +
+                self._token.get('user_name') + '/' +
                 _period
             )
             if req.error:
@@ -260,7 +252,7 @@ class EmailEC(RequestHandler):
         _input_reader = PdfFileReader(_input)
         _output_writer = PdfFileWriter()
         _output_writer.appendPagesFromReader(_input_reader)
-        # _output_writer.encrypt(self._token.get('user_name'))
+        _output_writer.encrypt(self._token.get('user_name'))
         _output = StringIO()
         _output_writer.write(_output)
         _output.seek(0)
