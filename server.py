@@ -7,11 +7,17 @@ from jinja2 import Environment, FileSystemLoader
 import pdfkit
 from PyPDF2 import PdfFileReader, PdfFileWriter
 from jose import jwt, ExpiredSignatureError
+import boto3
+from botocore.exceptions import BotoCoreError
 
 import os
 import functools
 from cStringIO import StringIO
 from datetime import datetime
+import urllib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.application import MIMEApplication
 
 
 def authenticated(method):
@@ -71,6 +77,32 @@ class RequestHandler(tornado.web.RequestHandler):
             container.get('mensajes')
         ))[0].get('mensajes')
 
+    def send_email(self, recipients, subject, body, attachments=[]):
+        msg = MIMEMultipart()
+        msg['From'] = self.settings.get('email_from')
+        msg['To'] = ','.join(recipients)
+        msg['Subject'] = subject
+        msg.attach(MIMEText(body, 'html', 'utf-8'))
+
+        if len(attachments) > 0:
+            for attachment in attachments:
+                part = MIMEApplication(
+                    attachment.get('data'),
+                    Name=attachment.get('name')
+                )
+                part['Content-Disposition'] = 'attachments; filename=%s' % (
+                    attachment.get('name')
+                )
+                part['Content-Type'] = attachment.get('content-type')
+                msg.attach(part)
+
+        client = boto3.client('ses')
+        client.send_raw_email(
+            Source=msg['From'],
+            Destinations=recipients,
+            RawMessage={'Data': msg.as_string()}
+        )
+
 
 class ViewEC(RequestHandler):
 
@@ -81,16 +113,14 @@ class ViewEC(RequestHandler):
         _doc_number = self.get_argument('doc_number')
         _period = self.get_argument('period')
         try:
-            datetime.strptime(
-                _period,
-                '%Y%m'
-            )
+            datetime.strptime(_period, '%Y%m')
         except ValueError:
             raise tornado.web.HTTPError(400)
 
         try:
             req = yield self.http_client.fetch(
                 self.settings.get('profuturo_api') +
+                'srvpf/eecc/' +
                 _doc_type + '/' + _doc_number + '/' +
                 # self._token.get('tipoDocumento') + '/' +
                 # self._token.get('user_name') + '/' +
@@ -148,10 +178,113 @@ class ViewEC(RequestHandler):
         self.finish(_data)
 
 
-class EmailEC(tornado.web.RequestHandler):
+class EmailEC(RequestHandler):
 
+    # @authenticated
+    @coroutine
     def get(self):
-        self.finish('email')
+        _doc_type = self.get_argument('doc_type')
+        _doc_number = self.get_argument('doc_number')
+        _period = self.get_argument('period')
+        try:
+            datetime.strptime(_period, '%Y%m')
+        except ValueError:
+            raise tornado.web.HTTPError(400)
+
+        try:
+            req = yield self.http_client.fetch(
+                self.settings.get('profuturo_api') +
+                'Home/GenClave_DatosBasico/?' +
+                urllib.urlencode({
+                    'tipoDocumento': _doc_type,
+                    'numeroDocumento': _doc_number,
+                    # 'tipoDocumento': self._token.get('tipoDocumento'),
+                    # 'numeroDocumento': self._token.get('user_name')
+                })
+            )
+            if req.error:
+                raise tornado.httpclient.HTTPError(500)
+            data = json_decode(req.body)
+        except (tornado.httpclient.HTTPError, ValueError):
+            self.finish('')
+            return
+        else:
+            _email = data.get('EMAIL')
+
+        try:
+            req = yield self.http_client.fetch(
+                self.settings.get('profuturo_api') +
+                'srvpf/eecc/' +
+                _doc_type + '/' + _doc_number + '/' +
+                # self._token.get('tipoDocumento') + '/' +
+                # self._token.get('user_name') + '/' +
+                _period
+            )
+            if req.error:
+                raise tornado.httpclient.HTTPError(500)
+            data = json_decode(req.body)
+        except (tornado.httpclient.HTTPError, ValueError):
+            self.finish('')
+            return
+
+        _type = None
+        _user_type = None
+        ok = True
+        if data.get('tipoComision').lower() == u'remuneraci\xf3n':
+            _type = 'flujo'
+        else:
+            _type = 'mixto'
+
+        if data.get('tipoAfiliado').lower() == 'p':
+            _user_type = 'premium'
+        else:
+            _type = 'mixto'
+
+        _input = StringIO(
+            pdfkit.from_string(
+                self.render_string(
+                    '%s-%s.html' % (_type, _user_type),
+                    data=data
+                ),
+                False,
+                options={
+                    'page-size': 'A4',
+                    'margin-top': '0in',
+                    'margin-bottom': '0in',
+                    'margin-left': '0in',
+                    'margin-right': '0in',
+                    'no-outline': None
+                }
+            )
+        )
+        _input_reader = PdfFileReader(_input)
+        _output_writer = PdfFileWriter()
+        _output_writer.appendPagesFromReader(_input_reader)
+        # _output_writer.encrypt(self._token.get('user_name'))
+        _output = StringIO()
+        _output_writer.write(_output)
+        _output.seek(0)
+        _data = _output.read()
+        _input.close()
+        _output.close()
+
+        try:
+            self.send_email(
+                [_email],
+                self.settings.get('email_subject'),
+                self.render_string(
+                    'mail_%s.html' % _user_type
+                ),
+                [{
+                    'name': u'estadodecuenta.pdf',
+                    'data': _data,
+                    'content_type': 'application/pdf'
+                }]
+            )
+        except BotoCoreError:
+            ok = False
+
+        self.finish({'ok': ok})
 
 
 if __name__ == '__main__':
@@ -182,8 +315,10 @@ if __name__ == '__main__':
                 os.path.dirname(__file__),
                 'keys'
             ),
-            'profuturo_api': 'http://apiuatw.profuturo.com.pe/' \
-            'serviciosexternos/srvpf/eecc/'
+            'profuturo_api': 'http://apiuatw.profuturo.com.pe/'
+            'serviciosexternos/',
+            'email_from': 'estadodecuenta@profuturo.com.pe'
+            'email_subject': 'Estado de Cuenta - Profuturo AFP'
         }
     )
     application.listen(options.port, options.host, xheaders=True)
