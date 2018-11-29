@@ -13,12 +13,15 @@
         tr
           td( colspan='4' ) 
             span.title Nombre: 
-            span  Jose ayon
+            span  {{data.nomCliente}}
 
         tr
           td( colspan='4' )
             small.title Direcci&oacute;n:
-            small( style='display:block') dafasfasdf
+            small( style='display:block') 
+              | {{data.desDirecc1}}
+              | {{data.desDirecc2}}
+              | {{data.desDirecc3}}
         
         tr
           td.c1.title.small( style='width: 20.81%' )
@@ -40,24 +43,24 @@
             | de aporte
         tr
           td.c1
-            small 123456789012
+            small {{data.idNss}}
 
           td.c1( style='width: 32.17%' )
-            small DNI 41705168
+            small {{data.numDocume}}
 
           td.c1( style='width: 23.9%' )
-            small Mixta
+            small {{data.tipoComision}}
 
           td.c1( style='width: 22.74%' )
-            small FEBRERO
+            small {{data.ultMesAporte}}
 
       #profile-static.table
         #profile-static-header
           span.title Tu ahorro Profuturo
-          span Octubre 2018
+          span {{data.fecReporte}}
 
         #profile-static-highlight
-          span S/ 548,100.74
+          span S/ {{data.saldoTotal}}
 
         #profile-static-footer
-          small Al 30 de septiembre de 2018
+          small {{data.fecLargaSaldoActual}}

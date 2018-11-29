@@ -2,7 +2,7 @@
   .inner
     .title-content
       h1.title Resumen de tu cuenta en Profuturo 
-      small( style='display: inline;') (Del 22/mm/aaaa al dd/mm/aaaa)
+      small( style='display: inline;') (Del {{data.primerAporte}} al {{data.fecFinal}})
 
     table#resume-apo.resume-table(
       cellpadding='0'
@@ -48,15 +48,15 @@
       tr
         td.title.small Obligatorio
 
-        td.small 2
+        td.small {{data.fondoOblInaf}}
 
-        td.small 537,990.73
+        td.small {{data.aporteOblInaf}}
 
-        td.small 537,999.73
+        td.small {{data.cargosOblInaf}}
 
-        td.small 537,999.73
+        td.small {{data.rendimientoOblInaf}}
 
-        td.small 499,999.73
+        td.small {{data.saldoOblInaf}}
 
     br
 
@@ -100,32 +100,32 @@
       tr
         td.title.small Con Fin Previsional
 
-        td.small 2
+        td.small {{data.fondoVcf}}
 
-        td.small 537,990.73
+        td.small {{data.aporteVcf}}
 
-        td.small 537,999.73
+        td.small {{data.cargosVcf}}
 
-        td.small 537,999.73
+        td.small {{data.rendimientoVcf}}
 
-        td.small 0.00
+        td.small {{data.comisionVcf}}
 
-        td.small 499,999.73
+        td.small {{data.saldoVcf}}
         
       tr
         td.title.small Sin Fin Previsional
 
-        td.small 2
+        td.small {{data.fondoVsf}}
 
-        td.small 537,990.73
+        td.small {{data.aporteVsf}}
 
-        td.small 537,999.73
+        td.small {{data.cargosVsf}}
 
-        td.small 537,999.73
+        td.small {{data.rendimientoVsf}}
 
-        td.small 0.00
+        td.small {{data.comisionVsf}}
 
-        td.small 499,999.73
+        td.small {{data.saldoVsf}}
 
     br
 
@@ -153,8 +153,8 @@
         td.small( style="width: 30.34%;" ) Valor Actualizado S/
 
       tr
-        td.small Constancia
+        td.small {{data.bonoSituacion}}
 
-        td.small 4,395.37
+        td.small {{data.bonoNominal}}
 
-        td.small 0.00
+        td.small {{data.bonoActualizado}}

@@ -2,7 +2,7 @@
   .inner
     .title-content
       h1.title Movimientos de tu Fondo  
-      small( style='display: inline;') (Del 22/mm/aaaa al dd/mm/aaaa)
+      small( style='display: inline;') (Del {{data.fecIniSaldoActual}} al {{data.fecFinSaldoActual}})
 
     table#found-table.resume-table(
       cellpadding='0'
@@ -10,7 +10,7 @@
       border='0'
     )
       tr
-        td.small.title( style='width: 9.38%;')
+        td.small.title( style='width: 10.38%;')
           | Fecha
           br
           | de Proceso
@@ -26,7 +26,7 @@
         td.small.title( style='width: 18.64%;') 
           | Movimiento
 
-        td.small.title( style='width: 32.28%;') 
+        td.small.title( style='width: 31.28%;') 
           | Raz&oacute;n Social
 
         td.small.title( style='width: 10.16%' ) 

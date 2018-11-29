@@ -2,7 +2,7 @@
   .inner
     .title-content
       h1.title Resumen de tu cuenta en el Sistema Privado de Pensiones 
-      small( style='display: inline;') (Del dd/mm/aaaa al dd/mm/aaaa)
+      small( style='display: inline;') (Del {{data.fecAfiliacionSPP}} al {{data.fecFinal}})
 
     p
       span#icon-1
@@ -27,17 +27,17 @@
             span.title.small Aportes SPP
               sup 2
 
-            span.small S/ 29,000.00
+            span.small S/ {{data.aporteSPP}}
 
           td
             span.title.small Retiros y Cargos SPP
               sup 3
-            span.small S/ 29,000.00
+            span.small S/ {{data.cargosSPP}}
 
           td
             span.title.small Rentabilidad SPP
-            span.small S/ 29,000.00
+            span.small S/ {{data.rendimientoSPP}}
 
           td
             span.title.small Saldo SPP
-            span.small S/ 29,000.00
+            span.small S/ {{data.saldoSPP}}
