@@ -167,7 +167,9 @@ class ViewEC(RequestHandler):
         _input_reader = PdfFileReader(_input)
         _output_writer = PdfFileWriter()
         _output_writer.appendPagesFromReader(_input_reader)
-        _output_writer.encrypt(self._token.get('user_name'))
+        _output_writer.encrypt(
+            self._token.get('user_name').encode('utf8')
+        )
         _output = StringIO()
         _output_writer.write(_output)
         _output.seek(0)
@@ -257,7 +259,9 @@ class EmailEC(RequestHandler):
         _input_reader = PdfFileReader(_input)
         _output_writer = PdfFileWriter()
         _output_writer.appendPagesFromReader(_input_reader)
-        _output_writer.encrypt(self._token.get('user_name'))
+        _output_writer.encrypt(
+            self._token.get('user_name').encode('utf8')
+        )
         _output = StringIO()
         _output_writer.write(_output)
         _output.seek(0)
