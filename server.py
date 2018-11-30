@@ -237,7 +237,7 @@ class EmailEC(RequestHandler):
         if data.get('tipoAfiliado').lower() == 'p':
             _user_type = 'premium'
         else:
-            _type = 'mixto'
+            _user_type = 'normal'
 
         _input = StringIO(
             pdfkit.from_string(
