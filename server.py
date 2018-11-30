@@ -6,7 +6,7 @@ from tornado.gen import coroutine
 from jinja2 import Environment, FileSystemLoader
 import pdfkit
 from PyPDF2 import PdfFileReader, PdfFileWriter
-from jose import jwt, ExpiredSignatureError
+from jose import jwt, ExpiredSignatureError, JWTError
 import boto3
 from botocore.exceptions import BotoCoreError
 
@@ -35,6 +35,8 @@ def authenticated(method):
                 raise tornado.web.HTTPError(400)
         except ExpiredSignatureError:
             raise tornado.web.HTTPError(404)
+        except JWTError:
+            raise tornado.web.HTTPError(400)
         return method(self, *args, **kwargs)
     return wrapper
 
