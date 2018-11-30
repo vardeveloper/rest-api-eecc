@@ -30,6 +30,9 @@ def authenticated(method):
         try:
             self._token = jwt.decode(_token, self.public_key,
                                      algorithms=['RS256'])
+            if self._token.get('tipoDocumento', None) is None or \
+                    self._token.get('user_name', None) is None:
+                raise tornado.web.HTTPError(400)
         except ExpiredSignatureError:
             raise tornado.web.HTTPError(404)
         return method(self, *args, **kwargs)
