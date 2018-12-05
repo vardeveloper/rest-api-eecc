@@ -13,8 +13,8 @@
         td.small.title( style='width: 25%' ) Prima de Seguro
           sup 1
 
-        td.small( style='width: 25%' ) S/ {{data.primaSeguroTotal|default('0.00')}}
+        td.small( style='width: 25%' ) S/ {% if data.primaSeguroTotal %}{{data.primaSeguroTotal|default('0.00')}}{% else %}0.00{% endif %}
 
         td.small.title( style='width: 25%' ) Comisi&oacute;n AFP
 
-        td.small( style='width: 25%' ) S/ {{data.comisionAfpTotal|default('0.00')}}
+        td.small( style='width: 25%' ) S/ {% if data.comisionAfpTotal %}{{data.comisionAfpTotal|default('0.00')}}{% else %}0.00{% endif %}

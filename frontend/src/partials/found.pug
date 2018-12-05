@@ -1,4 +1,4 @@
-|{% set empty = 1 %}
+|{% set found_table_empty = 2 %}
 #found.section
   .inner
     .title-content
@@ -33,72 +33,69 @@
         td.small.title( style='width: 10.16%' ) 
           | Soles
 
-      |{% if data.movimientosObl and data.movimientosObl.EECCMensualMovim %}
-      |{% for item in data.movimientosObl.EECCMensualMovim %}
+      |{% if data.movimientosObl and data.movimientosObl|length > 0 %}
+      |{% for item in data.movimientosObl %}
 
       |{% if
-      | (item.fecMovim and item.fecMovim != '0.00') and
-      | (item.periodoDevengue and item.periodoDevengue != '0.00') and
-      | (item.tipoMovim and item.tipoMovim != '0.00') and
-      | (item.conceptoMovim and item.conceptoMovim != '0.00') and
-      | (item.razonSocial and item.razonSocial != '0.00') and
+      | item.fecMovim and
+      | item.periodoDevengue and
+      | item.tipoMovim and
+      | item.conceptoMovim and
       | (item.montoMovim and item.montoMovim != '0.00')
       |%}
-      |{% set empty = 0 %}
+      |{% set found_table_empty = 0 %}
       tr
         td.small {{item.fecMovim}}
         td.small {{item.periodoDevengue}}
         td.small {{item.tipoMovim}}
         td.small {{item.conceptoMovim}}
-        td.small {{item.razonSocial}}
+        td.small {{item.razonSocial|default('')}}
         td.small {{item.montoMovim}}
       |{% endif %}
 
       |{% endfor %}
       |{% endif %}
 
-      |{% if data.movimientosVcf and data.movimientosVcf.EECCMensualMovim %}
-      |{% for item in data.movimientosVcf.EECCMensualMovim %}
+      |{% if data.movimientosVcf and data.movimientosVcf %}
+      |{% for item in data.movimientosVcf %}
 
       |{% if
-      | (item.fecMovim and item.fecMovim != '0.00') and
-      | (item.periodoDevengue and item.periodoDevengue != '0.00') and
-      | (item.tipoMovim and item.tipoMovim != '0.00') and
-      | (item.conceptoMovim and item.conceptoMovim != '0.00') and
-      | (item.razonSocial and item.razonSocial != '0.00') and
+      | item.fecMovim and
+      | item.periodoDevengue and
+      | item.tipoMovim and
+      | item.conceptoMovim and
       | (item.montoMovim and item.montoMovim != '0.00')
       |%}
-      |{% set empty = 0 %}
+      |{% set found_table_empty = 0 %}
       tr
         td.small {{item.fecMovim}}
         td.small {{item.periodoDevengue}}
         td.small {{item.tipoMovim}}
         td.small {{item.conceptoMovim}}
-        td.small {{item.razonSocial}}
+        td.small {{item.razonSocial|default('')}}
         td.small {{item.montoMovim}}
       |{% endif %}
 
       |{% endfor %}
       |{% endif %}
 
-      |{% if data.movimientosVsf and data.movimientosVsf.EECCMensualMovim %}
-      |{% for item in data.movimientosVsf.EECCMensualMovim %}
+      |{% if data.movimientosVsf and data.movimientosVsf %}
+      |{% for item in data.movimientosVsf %}
 
       |{% if
-      | (item.fecMovim and item.fecMovim != '0.00') and
-      | (item.periodoDevengue and item.periodoDevengue != '0.00') and
-      | (item.tipoMovim and item.tipoMovim != '0.00') and
-      | (item.conceptoMovim and item.conceptoMovim != '0.00') and
-      | (item.razonSocial and item.razonSocial != '0.00') and
+      | item.fecMovim and
+      | item.periodoDevengue and
+      | item.tipoMovim and
+      | item.conceptoMovim and
       | (item.montoMovim and item.montoMovim != '0.00')
       |%}
-      |{% set empty = 0 %}
+      |{% set found_table_empty = 0 %}
       tr
         td.small {{item.fecMovim}}
         td.small {{item.periodoDevengue}}
         td.small {{item.tipoMovim}}
         td.small {{item.conceptoMovim}}
-        td.small {{item.razonSocial}}
+        td.small {{item.razonSocial|default('')}}
         td.small {{item.montoMovim}}
       |{% endif %}
 
@@ -106,13 +103,13 @@
       |{% endif %}
 
       |{% if 
-      | (data.fecProcesoOblInaf and data.fecProcesoOblInaf != '0.00') and
-      | (data.mesRentabilidadOblInaf and data.mesRentabilidadOblInaf != '0.00') and
-      | (data.tipoAporteOblInaf and data.tipoAporteOblInaf != '0.00') and
-      | (data.tipoMovimOblInaf and data.tipoMovimOblInaf != '0.00') and
+      | data.fecProcesoOblInaf and
+      | data.mesRentabilidadOblInaf and
+      | data.tipoAporteOblInaf and
+      | data.tipoMovimOblInaf and
       | (data.rendimientoPeriodoOblInaf  and data.rendimientoPeriodoOblInaf != '0.00')
       | %}
-      |{% set empty = 0 %}
+      |{% set found_table_empty = 0 %}
       tr
         td.small {{data.fecProcesoOblInaf}}
         td.small {{data.mesRentabilidadOblInaf}}
@@ -123,13 +120,13 @@
       |{% endif %}
 
       |{% if 
-      | (data.fecProcesoOblAfec and data.fecProcesoOblAfec != '0.00') and
-      | (data.mesRentabilidadOblAfec and data.mesRentabilidadOblAfec != '0.00') and
-      | (data.tipoAporteOblAfec and data.tipoAporteOblAfec != '0.00') and
-      | (data.tipoMovimOblAfec and data.tipoMovimOblAfec != '0.00') and
+      | data.fecProcesoOblAfec and
+      | data.mesRentabilidadOblAfec and
+      | data.tipoAporteOblAfec and
+      | data.tipoMovimOblAfec and
       | (data.rendimientoPeriodoOblAfec and data.rendimientoPeriodoOblAfec != '0.00')
       | %}
-      |{% set empty = 0 %}
+      |{% set found_table_empty = 0 %}
       tr
         td.small {{data.fecProcesoOblAfec}}
         td.small {{data.mesRentabilidadOblAfec}}
@@ -140,13 +137,13 @@
       |{% endif %}
 
       |{% if 
-      | (data.fecProcesoCFP and data.fecProcesoCFP != '0.00') and
-      | (data.mesRentabilidadCFP and data.mesRentabilidadCFP != '0.00') and
-      | (data.tipoAporteCFP and data.tipoAporteCFP != '0.00') and
-      | (data.tipoMovimCFP and data.tipoMovimCFP != '0.00') and
+      | data.fecProcesoCFP and
+      | data.mesRentabilidadCFP and
+      | data.tipoAporteCFP and
+      | data.tipoMovimCFP and
       | (data.rendimientoPeriodoVcf  and data.rendimientoPeriodoVcf  != '0.00')
       |%}
-      |{% set empty = 0 %}
+      |{% set found_table_empty = 0 %}
       tr
         td.small {{data.fecProcesoCFP}}
         td.small {{data.mesRentabilidadCFP}}
@@ -157,13 +154,13 @@
       |{% endif %}
 
       |{% if 
-      | (data.fecProcesoSFP and data.fecProcesoSFP != '0.00') and
-      | (data.mesRentabilidadSFP and data.mesRentabilidadSFP != '0.00') and
-      | (data.tipoAporteSFP and data.tipoAporteSFP != '0.00') and
-      | (data.tipoMovimSFP and data.tipoMovimSFP != '0.00') and
+      | data.fecProcesoSFP  and
+      | data.mesRentabilidadSFP and
+      | data.tipoAporteSFP and
+      | data.tipoMovimSFP and
       | (data.rendimientoPeriodoVsf  and data.rendimientoPeriodoVsf != '0.00')
       | %}
-      |{% set empty = 0 %}
+      |{% set found_table_empty = 0 %}
       tr
         td.small {{data.fecProcesoSFP}}
         td.small {{data.mesRentabilidadSFP}}
@@ -173,12 +170,12 @@
         td.small {{data.rendimientoPeriodoVsf}}
       |{% endif %}
 
-      |{% if empty %}
+      |{% if found_table_empty == 1 %}
       tr
         td.small &nbsp;
         td.small &nbsp;
         td.small &nbsp;
         td.small &nbsp;
         td.small &nbsp;
-        td.small &nbsp;
+        td.small &nbsp; {{ found_table_empty }}
       |{% endif %}
