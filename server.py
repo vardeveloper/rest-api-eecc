@@ -77,10 +77,13 @@ class RequestHandler(tornado.web.RequestHandler):
             .render(**kwargs)
 
     def get_param(self, container, group_type):
-        return list(filter(
-            lambda x: x.get('grupoMensaje', '') == group_type,
-            container.get('mensajes')
-        ))[0].get('mensajes')
+        try:
+            return list(filter(
+                lambda x: x.get('grupoMensaje', '') == group_type,
+                container.get('mensajes')
+            ))[0].get('mensajes')
+        except IndexError:
+            return None
 
     def send_email(self, recipients, subject, body, attachments=[]):
         msg = MIMEMultipart()
