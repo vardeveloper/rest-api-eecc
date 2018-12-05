@@ -59,7 +59,7 @@
         td.small {{data.saldoOblInaf}}
 
 
-    |{% set empty_apv = 2 %}
+    |{% set apv_empty = { 'row': 0, 'table_hide': 1 } %}
     |{% if
     | data.tipoAfiliado == 'V' or
     | (
@@ -75,6 +75,7 @@
     | (data.saldoVsf and data.saldoVsf != '0.00')
     | )
     | %}
+    |{% do apv_empty.update({ 'table_hide': 0 })  %}
     br
     table#resume-apv.resume-table(
       cellpadding='0'
@@ -120,7 +121,7 @@
       | (data.comisionVcf and data.comisionVcf != '0.00') or
       | (data.saldoVcf and data.saldoVcf != '0.00')
       | %}
-      |{% set empty_apv = 0 %}
+      |{% do apv_empty.update({ 'row': apv_empty.get('row') + 1 })  %}
       tr
         td.title.small Con Fin Previsional
 
@@ -144,7 +145,7 @@
       | (data.comisionVsf and data.comisionVsf != '0.00') or
       | (data.saldoVsf and data.saldoVsf != '0.00')
       | %}
-      |{% set empty_apv = 0 %}
+      |{% do apv_empty.update({ 'row': apv_empty.get('row') + 1 })  %}
       tr
         td.title.small Sin Fin Previsional
 
@@ -161,7 +162,7 @@
         td.small {{data.saldoVsf}}
       |{% endif %}
 
-      |{% if empty_apv %}
+      |{% if apv_empty.get('row') == 0 %}
       tr
         td.title.small &nbsp;
 
@@ -179,11 +180,13 @@
       |{% endif %}
     |{% endif %}
 
+    |{% set bono_empty = { 'table_hide': 1 } %}
     |{% if 
     | (data.bonoSituacion and data.bonoSituacion != '0.00') or
     | (data.bonoNominal and data.bonoNominal != '0.00') or
     | (data.bonoActualizado and data.bonoActualizado != '0.00')
     |%}
+    |{% do bono_empty.update({ 'table_hide': 0 }) %}
     br
     table#resume-bono.resume-table(
       cellpadding='0'

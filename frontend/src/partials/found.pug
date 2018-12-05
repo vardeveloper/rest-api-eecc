@@ -1,4 +1,3 @@
-|{% set found_table_empty = 2 %}
 #found.section
   .inner
     .title-content
@@ -33,7 +32,11 @@
         td.small.title( style='width: 10.16%' ) 
           | Soles
 
-      |{% if data.movimientosObl and data.movimientosObl|length > 0 %}
+      |{% set found_table_empty = 0 %}
+      |{% set found_table_count_rows = 0 %}
+      |{% set found_empty = { 'table_empty': 1, 'row': 0 } %}
+
+      |{% if data.movimientosObl and data.movimientosObl %}
       |{% for item in data.movimientosObl %}
 
       |{% if
@@ -43,7 +46,7 @@
       | item.conceptoMovim and
       | (item.montoMovim and item.montoMovim != '0.00')
       |%}
-      |{% set found_table_empty = 0 %}
+      |{% do found_empty.update({ 'table_empty': 0, 'row': found_empty.get('row') + 1 }) %}
       tr
         td.small {{item.fecMovim}}
         td.small {{item.periodoDevengue}}
@@ -66,7 +69,7 @@
       | item.conceptoMovim and
       | (item.montoMovim and item.montoMovim != '0.00')
       |%}
-      |{% set found_table_empty = 0 %}
+      |{% do found_empty.update({ 'table_empty': 0, 'row': found_empty.get('row') + 1 }) %}
       tr
         td.small {{item.fecMovim}}
         td.small {{item.periodoDevengue}}
@@ -89,7 +92,7 @@
       | item.conceptoMovim and
       | (item.montoMovim and item.montoMovim != '0.00')
       |%}
-      |{% set found_table_empty = 0 %}
+      |{% do found_empty.update({ 'table_empty': 0, 'row': found_empty.get('row') + 1 }) %}
       tr
         td.small {{item.fecMovim}}
         td.small {{item.periodoDevengue}}
@@ -109,7 +112,7 @@
       | data.tipoMovimOblInaf and
       | (data.rendimientoPeriodoOblInaf  and data.rendimientoPeriodoOblInaf != '0.00')
       | %}
-      |{% set found_table_empty = 0 %}
+      |{% do found_empty.update({ 'table_empty': 0, 'row': found_empty.get('row') + 1 }) %}
       tr
         td.small {{data.fecProcesoOblInaf}}
         td.small {{data.mesRentabilidadOblInaf}}
@@ -126,7 +129,7 @@
       | data.tipoMovimOblAfec and
       | (data.rendimientoPeriodoOblAfec and data.rendimientoPeriodoOblAfec != '0.00')
       | %}
-      |{% set found_table_empty = 0 %}
+      |{% do found_empty.update({ 'table_empty': 0, 'row': found_empty.get('row') + 1 }) %}
       tr
         td.small {{data.fecProcesoOblAfec}}
         td.small {{data.mesRentabilidadOblAfec}}
@@ -143,7 +146,7 @@
       | data.tipoMovimCFP and
       | (data.rendimientoPeriodoVcf  and data.rendimientoPeriodoVcf  != '0.00')
       |%}
-      |{% set found_table_empty = 0 %}
+      |{% do found_empty.update({ 'table_empty': 0, 'row': found_empty.get('row') + 1 }) %}
       tr
         td.small {{data.fecProcesoCFP}}
         td.small {{data.mesRentabilidadCFP}}
@@ -160,7 +163,7 @@
       | data.tipoMovimSFP and
       | (data.rendimientoPeriodoVsf  and data.rendimientoPeriodoVsf != '0.00')
       | %}
-      |{% set found_table_empty = 0 %}
+      |{% do found_empty.update({ 'table_empty': 0, 'row': found_empty.get('row') + 1 }) %}
       tr
         td.small {{data.fecProcesoSFP}}
         td.small {{data.mesRentabilidadSFP}}
@@ -170,12 +173,37 @@
         td.small {{data.rendimientoPeriodoVsf}}
       |{% endif %}
 
-      |{% if found_table_empty == 1 %}
+      |{% if found_empty.get('table_empty') %}
       tr
         td.small &nbsp;
         td.small &nbsp;
         td.small &nbsp;
         td.small &nbsp;
         td.small &nbsp;
-        td.small &nbsp; {{ found_table_empty }}
+        td.small &nbsp;
+      |{% else %}
+
+      |{% do found_empty.update({ 'max_lines': 8 }) %}
+      |{% do found_empty.update({ 'max_lines': found_empty.get('max_lines') - found_empty.get('row') }) %}
+
+      |{% if apv_empty.get('table_hide') == 0  %}
+      |{% do found_empty.update({ 'max_lines': found_empty.get('max_lines') - (4 + apv_empty.get('row')) }) %}
+      |{% endif %}
+
+      |{% if bono_empty.get('table_hide') == 0  %}
+      |{% do found_empty.update({ 'max_lines': found_empty.get('max_lines') - 4 }) %}
+      |{% endif %}
+
+      |{% if found_empty.get('max_lines') > 0 %}
+      |{% for line in range(0, found_empty.get('max_lines')) %}
+      tr
+        td.small &nbsp; 
+        td.small &nbsp; 
+        td.small &nbsp; 
+        td.small &nbsp;
+        td.small &nbsp;
+        td.small &nbsp; 
+      |{% endfor %}
+      |{% endif %}
+
       |{% endif %}
