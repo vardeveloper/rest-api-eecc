@@ -77,10 +77,13 @@ class RequestHandler(tornado.web.RequestHandler):
             .render(**kwargs)
 
     def get_param(self, container, group_type):
-        return list(filter(
-            lambda x: x.get('grupoMensaje', '') == group_type,
-            container.get('mensajes')
-        ))[0].get('mensajes')
+        try:
+            return list(filter(
+                lambda x: x.get('grupoMensaje', '') == group_type,
+                container.get('mensajes')
+            ))[0].get('mensajes')
+        except IndexError:
+            return None
 
     def send_email(self, recipients, subject, body, attachments=[]):
         msg = MIMEMultipart()
@@ -167,7 +170,9 @@ class ViewEC(RequestHandler):
         _input_reader = PdfFileReader(_input)
         _output_writer = PdfFileWriter()
         _output_writer.appendPagesFromReader(_input_reader)
-        _output_writer.encrypt(self._token.get('user_name'))
+        _output_writer.encrypt(
+            self._token.get('user_name').encode('utf8')
+        )
         _output = StringIO()
         _output_writer.write(_output)
         _output.seek(0)
@@ -235,7 +240,7 @@ class EmailEC(RequestHandler):
         if data.get('tipoAfiliado').lower() == 'p':
             _user_type = 'premium'
         else:
-            _type = 'mixto'
+            _user_type = 'normal'
 
         _input = StringIO(
             pdfkit.from_string(
@@ -257,7 +262,9 @@ class EmailEC(RequestHandler):
         _input_reader = PdfFileReader(_input)
         _output_writer = PdfFileWriter()
         _output_writer.appendPagesFromReader(_input_reader)
-        _output_writer.encrypt(self._token.get('user_name'))
+        _output_writer.encrypt(
+            self._token.get('user_name').encode('utf8')
+        )
         _output = StringIO()
         _output_writer.write(_output)
         _output.seek(0)
