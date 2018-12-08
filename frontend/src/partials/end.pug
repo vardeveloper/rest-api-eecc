@@ -1,14 +1,29 @@
+|{% set end_section = { 'nota_id': 'MENSAJES' } %}
 #end
+  |{% if data.tipoAfiliado|lower != 'v' %}
   #banner
     a( href='https://www.profuturo.com.pe/profuturo-app' target='_blank' )
       block banner
         include banner-2
+  |{% endif %}
 
-  #nota-content
+  #nota-content(
+    class!="{% if data.tipoAfiliado|lower != 'v' %}alter-background{% endif %}"
+  )
     #nota-inner
       h1.title Notas
       .message
-        |{% for item in handler.get_param(data, 'MENSAJES') %}
+        |{% if data.tipoAfiliado == 'P' %}
+        |{% do end_section.update({'nota_id': 'PREMIUM' }) %}
+        |{% elif data.tipoAfiliado == 'N' %}
+        |{% do end_section.update({'nota_id': 'MASIVO' }) %}
+        |{% elif data.tipoAfiliado == 'V' %}
+        |{% do end_section.update({'nota_id': 'APORTES VOLUNTARIOS' }) %}
+        |{% elif data.tipoAfiliado == 'J' %}
+        |{% do end_section.update({'nota_id': 'PENSIONISTAS' }) %}
+        |{% endif %}
+
+        |{% for item in handler.get_param(data, end_section.get('nota_id')) %}
         | {{ item }}
         br
         |{% endfor %}

@@ -1,16 +1,29 @@
+|{% set resume_section = { 
+| 'ao_firstcolwidth': '10.4', 'ao_secondcolswidth': '12.8', 'ao_colswidth': '12.8', 
+| 'av_firstcolwidth': '10.4', 'av_secondcolswidth': '12.8', 'av_colswidth': '12.8', 
+| 'b_firstcolwidth': '10.4', 'b_colwidth': '29.8666666667'
+| } %}
+|{% if data.tipoComision and data.tipoComision|lower == 'remuneración' %}
+|{% do resume_section.update({ 'ao_firstcolwidth': '8.97', 'ao_secondcolwidth': '14.3', 'ao_colswidth': '13.2' }) %}
+|{% do resume_section.update({ 'av_firstcolwidth': '8.97', 'av_secondcolwidth': '14.3', 'av_colswidth': '11' }) %}
+|{% do resume_section.update({ 'b_firstcolwidth': '8.97', 'b_colwidth': '30.34' }) %}
+|{% endif %}
 #resume.section
   .inner
     .title-content
       h1.title Resumen de tu cuenta en Profuturo 
       small( style='display: inline;') (Del {{data.primerAporte}} al {{data.fecFinal}})
 
+    |{% set apo_empty = { 'table_hide': 1 } %}
+    |{% if data.tipoAfiliado|lower != 'v' %}
+    |{% do apo_empty.update({ 'table_hide': 0 }) %}
     table#resume-apo.resume-table(
       cellpadding='0'
       cellspacing='0'
       border='0'
     )
       tr
-        td.link-content.small( rowspan='4' )
+        td.link-content.small( rowspan='4', style!="width: {{ resume_section.get('ao_firstcolwidth') }}%" )
           | Conoce los 
           br
           | t&eacute;rminos de 
@@ -25,22 +38,40 @@
           | Aportes Obligatorios
 
       tr
-        td.title.small Tipo de Aporte
+        td.title.small( style!="width: {{ resume_section.get('ao_secondcolwidth') }}%" ) Tipo de Aporte
 
-        td.small Tipo de Fondo
+        td.small( style!="width: {{ resume_section.get('ao_colswidth') }}%" ) Tipo de Fondo
 
-        td.small Aportes Acumulados S/
+        td.small( style!="width: {{ resume_section.get('ao_colswidth') }}%" ) Aportes 
+          br
+          | Acumulados S/
 
-        td.small Retiros y Cargos Acumulados S/
+        td.small( style!="width: {{ resume_section.get('ao_colswidth') }}%" ) Retiros y Cargos 
+          br
+          | Acumulados S/
 
-        td.small Rentabilidad Acumulada S/
+        td.small( style!="width: {{ resume_section.get('ao_colswidth') }}%" ) Rentabilidad 
+          br
+          | Acumulada S/
 
-        td.small Comisi&oacute;n Acumulada S/
+        |{% if data.tipoComision and data.tipoComision|lower == 'remuneración' %}
+        |{% else %}
+        td.small( style!="width: {{ resume_section.get('ao_colswidth') }}%" ) Comisi&oacute;n 
+          br
+          | Acumulada S/
+        |{% endif %}
 
-        td.small Saldo Actual S/
+        td.small( style!="width: {{ resume_section.get('ao_colswidth') }}%" ) Saldo 
+          br
+          | Actual S/
         
       tr
-        td.title.small Obligatorios Inafecto
+        td.title.small 
+          |{% if data.tipoComision and data.tipoComision|lower == 'remuneración' %}
+          | Obligatorio
+          |{% else %}
+          | Obligatorio Inafecto
+          |{% endif %}
 
         td.small {{data.fondoOblInaf}}
 
@@ -50,12 +81,17 @@
 
         td.small {{data.rendimientoOblInaf}}
 
+        |{% if data.tipoComision and data.tipoComision|lower == 'remuneración' %}
+        |{% else %}
         td.small {{data.comisionOblInaf}}
+        |{% endif %}
 
         td.small {{data.saldoOblInaf}}
 
+      |{% if data.tipoComision and data.tipoComision|lower == 'remuneración' %}
+      |{% else %}
       tr
-        td.title.small Obligatorios Afecto
+        td.title.small Obligatorio Afecto
 
         td.small {{data.fondoOblAfec}}
 
@@ -65,14 +101,19 @@
 
         td.small {{data.rendimientoOblAfec}}
 
+        |{% if data.tipoComision and data.tipoComision|lower == 'remuneración' %}
+        |{% else %}
         td.small {{data.comisionOblAfec}}
+        |{% endif %}
 
         td.small {{data.saldoOblAfec}}
+      |{% endif %}
+    |{% endif %}
 
 
     |{% set apv_empty = { 'row': 0, 'table_hide': 1 } %}
     |{% if
-    | data.tipoAfiliado == 'V' or
+    | data.tipoAfiliado|lower == 'v' or
     | (
     | (data.aporteVcf and data.aporteVcf != '0.00') or
     | (data.cargosVcf and data.cargosVcf != '0.00') or
@@ -87,14 +128,13 @@
     | )
     |%}
     |{% do apv_empty.update({ 'table_hide': 0 })  %}
-    br
     table#resume-apv.resume-table(
       cellpadding='0'
       cellspacing='0'
       border='0'
     )
       tr
-        td.link-content.small( rowspan='4' )
+        td.link-content.small( rowspan='4', style="width: {{ resume_section.get('av_firstcolwidth') }}%" )
           | Conoce los 
           br
           | t&eacute;rminos de 
@@ -109,19 +149,32 @@
           | Aportes Voluntarios
 
       tr
-        td.title.small Tipo de Aporte
+        td.title.small( style!="width: {{ resume_section.get('av_secondcolwidth') }}%" ) Tipo de Aporte
+          |{% if data.tipoAfiliado|lower == 'v' %}
+          | Voluntario
+          |{% endif %}
 
-        td.small Tipo de Fondo
+        td.small( style!="width: {{ resume_section.get('av_colswidth') }}%" ) Tipo de Fondo
 
-        td.small Aportes Acumulados S/
+        td.small( style!="width: {{ resume_section.get('av_colswidth') }}%" ) Aportes 
+          br
+          | Acumulados S/
 
-        td.small Retiros y Cargos Acumulados S/
+        td.small( style!="width: {{ resume_section.get('av_colswidth') }}%" ) Retiros y Cargos 
+          br
+          | Acumulados S/
 
-        td.small Rentabilidad Acumulada S/
+        td.small( style!="width: {{ resume_section.get('av_colswidth') }}%" ) Rentabilidad 
+          br
+          | Acumulada S/
 
-        td.small Comisi&oacute;n Acumulada S/
+        td.small( style!="width: {{ resume_section.get('av_colswidth') }}%" ) Comisi&oacute;n 
+          br
+          | Acumulada S/
 
-        td.small Saldo Actual S/
+        td.small( style!="width: {{ resume_section.get('av_colswidth') }}%" ) Saldo 
+          br
+          | Actual S/
         
       |{% if 
       | (data.aporteVcf and data.aporteVcf != '0.00') or
@@ -132,7 +185,9 @@
       | %}
       |{% do apv_empty.update({ 'row': apv_empty.get('row') + 1 })  %}
       tr
-        td.title.small Con Fin Previsional
+        td.title.small Con Fin 
+          br
+          | Previsional
 
         td.small {{data.fondoVcf}}
 
@@ -156,7 +211,9 @@
       | %}
       |{% do apv_empty.update({ 'row': apv_empty.get('row') + 1 })  %}
       tr
-        td.title.small Sin Fin Previsional
+        td.title.small Sin Fin 
+          br
+          | Previsional
 
         td.small {{data.fondoVsf}}
 
@@ -190,7 +247,8 @@
     |{% endif %}
 
     |{% set bono_empty = { 'table_hide': 1 } %}
-    |{% if 
+    |{% if data.tipoAfiliado|lower != 'v' %}
+    |{% if
     | (data.bonoSituacion and data.bonoSituacion != '0.00') or
     | (data.bonoNominal and data.bonoNominal != '0.00') or
     | (data.bonoActualizado and data.bonoActualizado != '0.00')
@@ -203,7 +261,7 @@
       border='0'
     )
       tr
-        td.link-content.small( rowspan='4' )
+        td.link-content.small( rowspan='4' style!="width: {{ resume_section.get('b_firstcolwidth') }}%" )
           | Conoce los t&eacute;rminos de
           br 
           | Bono de Reconocimiento
@@ -214,11 +272,11 @@
           | Bono de Reconocimiento
 
       tr
-        td.small Situaci&oacute;n
+        td.small(  style!="width: {{ resume_section.get('b_colwidth') }}%" ) Situaci&oacute;n
 
-        td.small Valor Nominal S/
+        td.small(  style!="width: {{ resume_section.get('b_colwidth') }}%" ) Valor Nominal S/
 
-        td.small Valor Actualizado S/
+        td.small(  style!="width: {{ resume_section.get('b_colwidth') }}%" ) Valor Actualizado S/
 
       tr
         td.small {{data.bonoSituacion}}
@@ -227,4 +285,5 @@
 
         td.small {{data.bonoActualizado}}
 
+    |{% endif %}
     |{% endif %}

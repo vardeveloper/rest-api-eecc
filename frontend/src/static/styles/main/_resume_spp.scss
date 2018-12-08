@@ -7,6 +7,14 @@
     position: relative;
     top: 2px;
   }
+  .title-content {
+    margin: 0;
+  }
+}
+
+#resume_spp_subtitle {
+  margin: 0 0 5px;
+  font-size: 12px;
 }
 
 #resume-spp-table {
@@ -44,6 +52,7 @@
 
   td {
     width: 25%;
+    padding: 3px 7px;
 
     span {
       display: block;
@@ -51,7 +60,7 @@
     }
 
     .title {
-      padding: 0 0 10px;
+      padding: 0 0 3px;
     }
   }
 }

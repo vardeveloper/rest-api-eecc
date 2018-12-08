@@ -20,8 +20,10 @@ html(lang="es")
         include ../partials/resume.pug
         include ../partials/found.pug
 
-        .section-group
+        |{% if data.tipoAfiliado|lower != 'v' %}
+        .section-group 
           include ../partials/discount.pug
           include ../partials/resume_spp.pug
+        |{% endif %}
 
         include ../partials/end.pug

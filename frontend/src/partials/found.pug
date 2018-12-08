@@ -8,6 +8,7 @@
       cellpadding='0'
       cellspacing='0'
       border='0'
+      class!="{% if data.tipoAfiliado|lower == 'v' %}voluntary{% endif %}"
     )
       tr
         td.small.title( style='width: 10.38%;')
@@ -183,16 +184,17 @@
         td.small &nbsp;
       |{% else %}
 
-      |{% do found_empty.update({ 'max_lines': 8 }) %}
+      |{% do found_empty.update({ 'max_lines': 13 }) %}
+
+      |{% if data.tipoAfiliado|lower == 'v' %}
+      |{% do found_empty.update({ 'max_lines': 30 }) %}
+      |{% elif apv_empty.get('table_hide') and bono_empty.get('table_hide') %}
+      |{% do found_empty.update({ 'max_lines': 24 }) %}
+      |{% elif apv_empty.get('table_hide')  %}
+      |{% do found_empty.update({ 'max_lines': 21 }) %}
+      |{% endif %}
+
       |{% do found_empty.update({ 'max_lines': found_empty.get('max_lines') - found_empty.get('row') }) %}
-
-      |{% if apv_empty.get('table_hide') == 0  %}
-      |{% do found_empty.update({ 'max_lines': found_empty.get('max_lines') - (4 + apv_empty.get('row')) }) %}
-      |{% endif %}
-
-      |{% if bono_empty.get('table_hide') == 0  %}
-      |{% do found_empty.update({ 'max_lines': found_empty.get('max_lines') - 4 }) %}
-      |{% endif %}
 
       |{% if found_empty.get('max_lines') > 0 %}
       |{% for line in range(0, found_empty.get('max_lines')) %}

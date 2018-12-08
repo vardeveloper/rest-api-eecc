@@ -16,7 +16,23 @@
 
 #profile {
   width: 58.40%;
-  // width: 62%;
+
+  .name-title {
+    font-size: 20px;
+  }
+
+  .address-title {
+    font-size: 17px;
+    padding-bottom: 5px;
+  }
+
+  .name {
+    font-size: 13px;
+  }
+
+  td.data {
+    text-align: center;
+  }
 
   small {
     display: block;
@@ -58,7 +74,17 @@
 }
 
 #profile-static-footer {
-  padding: 13px 21px;
+  position: absolute;
+  left: 0;
+  bottom: 10.5%;
+  transform: translateY(50%);
+  display: block;
+  width: 100%;
+
+  small {
+    display: block;
+    padding: 0 21px;
+  }
 }
 
 #profile-content {

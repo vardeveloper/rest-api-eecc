@@ -4,10 +4,14 @@
 
     td {
       text-align: center;
+      padding: 3px 7px 5px;
+      font-size: 12px;
     }
   }
 
-  super {
+  sup {
     font-size: 10px;
+    top: 2px;
+    position: relative;
   }
 }

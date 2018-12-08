@@ -46,7 +46,7 @@ h1 {
 }
 
 .title-content {
-  margin: 0 0 17px;
+  margin: 0 0 9px;
 
   h1 {
     display: inline;
@@ -55,12 +55,13 @@ h1 {
 
 .section {
   // padding: 21px 0 0;
-  padding: 14px 0 0;
+  // padding: 27px 0 0;
+  padding: 15px 0 0;
 }
 
 small, .small {
-  font-size: 13px;
-  line-height: 15px;
+  font-size: 11px;
+  line-height: 13px;
 }
 
 small {
@@ -73,9 +74,8 @@ table
 
   td {
     border: 1px solid $color4;
-    padding: 11px 12px;
+    padding: 7px;
     box-sizing: border-box;
-    @include title;
   }
 
   td:last-child {
@@ -88,7 +88,7 @@ table
 
   // cell tipo 1
   .c1 {
-    padding: 8px 5px 8px 10px;
+    padding: 4px 5px;
   }
 }
 

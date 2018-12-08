@@ -4,12 +4,32 @@
   table {
     width: 100%;
 
+    td {
+      padding: 3px 5px;
+    }
+
+    td.small:nth-child(1),
+    td.small:nth-child(2),
+    {
+      text-align: center;
+    }
+
+    td.small:last-child {
+      text-align: right;
+    }
+
     td.title {
-      padding: 13px 5px;
+      text-align: center !important;
     }
   }
 
   .title {
     text-align: center;
+  }
+}
+
+#found-table.voluntary {
+  td:nth-child(5) {
+    display: none;
   }
 }

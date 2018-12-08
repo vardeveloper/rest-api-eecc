@@ -12,13 +12,13 @@
       )
         tr
           td( colspan='4' ) 
-            span.title Nombre: 
-            span  {{data.nomCliente}}
+            span.title.name-title Nombre: 
+            span.name  {{data.nomCliente}}
 
         tr
           td( colspan='4' )
-            small.title Direcci&oacute;n:
-            small( style='display:block') 
+            small.title.address-title Direcci&oacute;n:
+            small( style='display:block;min-height:39px;') 
               |{% if data.desDirecc1 %}
               |{{data.desDirecc1}}
               br
@@ -40,31 +40,35 @@
             br
             | Documento de Identidad
 
+          |{% if data.tipoAfiliado|lower != 'v' %}
           td.c1.small.title( style='width: 24.9%' )
             | Esquema de 
             br
             | cobro de Comisi&oacute;n
+          |{% endif %}
 
           td.c1.title.small( style='width: 21.74%' )
             | &Uacute;ltimo mes
             br
             | de aporte
         tr
-          td.c1
+          td.c1.data
             small {{data.idNss}}
 
-          td.c1( style='width: 32.17%' )
+          td.c1.data( style='width: 32.17%' )
             small {{data.numDocume}}
 
-          td.c1( style='width: 23.9%' )
+          |{% if data.tipoAfiliado|lower != 'v' %}
+          td.c1.data( style='width: 23.9%' )
             small {{data.tipoComision}}
+          |{% endif %}
 
-          td.c1( style='width: 22.74%' )
+          td.c1.data( style='width: 22.74%' )
             small {{data.ultMesAporte}}
 
       #profile-static.table
         #profile-static-header
-          span.title Tu ahorro Profuturo
+          span.title Tu ahorro en Profuturo
           span {{data.fecReporte}}
 
         #profile-static-highlight
