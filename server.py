@@ -140,11 +140,6 @@ class ViewEC(RequestHandler):
 
         _type = None
         _user_type = None
-        if data.get('tipoComision').lower() == u'remuneraci\xf3n':
-            _type = 'flujo'
-        else:
-            _type = 'mixto'
-
         if data.get('tipoAfiliado').lower() == 'p':
             _user_type = 'premium'
         else:
@@ -153,7 +148,7 @@ class ViewEC(RequestHandler):
         _input = StringIO(
             pdfkit.from_string(
                 self.render_string(
-                    '%s-%s.html' % (_type, _user_type),
+                    '%s.html' % (_user_type),
                     data=data
                 ),
                 False,
@@ -232,11 +227,6 @@ class EmailEC(RequestHandler):
         _type = None
         _user_type = None
         ok = True
-        if data.get('tipoComision').lower() == u'remuneraci\xf3n':
-            _type = 'flujo'
-        else:
-            _type = 'mixto'
-
         if data.get('tipoAfiliado').lower() == 'p':
             _user_type = 'premium'
         else:
@@ -245,7 +235,7 @@ class EmailEC(RequestHandler):
         _input = StringIO(
             pdfkit.from_string(
                 self.render_string(
-                    '%s-%s.html' % (_type, _user_type),
+                    '%s.html' % (_user_type),
                     data=data
                 ),
                 False,
