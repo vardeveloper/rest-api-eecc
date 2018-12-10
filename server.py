@@ -8,7 +8,7 @@ import pdfkit
 from PyPDF2 import PdfFileReader, PdfFileWriter
 from jose import jwt, ExpiredSignatureError, JWTError
 import boto3
-from botocore.exceptions import BotoCoreError
+from botocore.exceptions import ClientError
 
 import os
 import functools
@@ -138,7 +138,6 @@ class ViewEC(RequestHandler):
             self.finish('')
             return
 
-        _type = None
         _user_type = None
         if data.get('tipoAfiliado').lower() == 'p':
             _user_type = 'premium'
@@ -224,7 +223,6 @@ class EmailEC(RequestHandler):
             self.finish('')
             return
 
-        _type = None
         _user_type = None
         ok = True
         if data.get('tipoAfiliado').lower() == 'p':
@@ -275,7 +273,7 @@ class EmailEC(RequestHandler):
                     'content_type': 'application/pdf'
                 }]
             )
-        except BotoCoreError:
+        except ClientError:
             ok = False
 
         self.finish({'ok': ok})
