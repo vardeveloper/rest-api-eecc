@@ -276,7 +276,7 @@ class EmailEC(RequestHandler):
                     name=_name
                 ),
                 [{
-                    'name': u'estadodecuenta.pdf',
+                    'name': u'%s.pdf' % data.get('idNss'),
                     'data': _data,
                     'content_type': 'application/pdf'
                 }]
