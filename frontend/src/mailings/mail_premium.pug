@@ -1,16 +1,10 @@
 extend mail_normal
 
+block prepend variables
+  - custom.img_sufix = '-p'
+
 block css
   link( href!=handler.static_url('styles/mailing-premium.css'), rel='stylesheet', type='text/css', media='all' )
 
-block important_top
-  img( src!=handler.static_url('important-2-1.png', _static_url), width='517', height='23' )
-
-block important_bottom
-  img( src!=handler.static_url('important-2-2.png', _static_url), width='517', height='12' )
-
 block attach_bottom
   img( src!=handler.static_url('separator-2.jpg', _static_url), width='524', height='9', alt!='')
-
-block prepend section_column
-  - custom.img_sufix = '-p'

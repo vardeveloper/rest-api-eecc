@@ -41,27 +41,8 @@ block main
 
     table#important( aling='center', cellpadding='0', cellspacing='0', border='0' )
       tr
-        td( colspan='3' )
-          block important_top
-            img( src!=handler.static_url('important-1-1.png', _static_url), width='517', height='23' )
-
-      tr
-        td.left( style='width: 16px; background-image: url(' +  handler.static_url('important-left.png', _static_url) + ')' )
-          img( src!=handler.static_url('important-left.png', _static_url), width='16', height='100%' )
-
-        td.center( style='width: 485px' )
-          block important_center
-            p 
-              font( face='Trebuchet MS, Arial, Helvetica, sans-serif' )
-                | La contrase&ntilde;a del archivo es tu n&uacute;mero de documento de identidad.
-
-        td.right( style='width: 16px; background-image: url(' +  handler.static_url('important-right.png', _static_url) + ')' )
-          img( src!=handler.static_url('important-right.png', _static_url), width='16', height='100%' )
-
-      tr
-        td( colspan='3' )
-          block important_bottom
-            img( src!=handler.static_url('important-1-2.png', _static_url), width='517', height='12' )
+        td
+          img( src!=handler.static_url('important' + (custom.img_sufix || '') + '.png', _static_url), width='517', height='57' )
 
     img.separator( src!=handler.static_url('border-white.png', _static_url), width='100%', height='23', alt!='')
 
@@ -189,7 +170,7 @@ block main
                   p.description
                     br
                     font( face="Trebuchet MS, Arial, Helvetica, sans-serif" ) 
-                      | Sigue los consejos de nuestros especialistas en temas sobre AFP, experiencias de vida, responsabilidad social, salud, tecnolog&iacute;a, vida profesional y viajes.
+                      | Sigue los consejos de nuestros especialistas en temas sobre AFP, experiencias de vida, responsabilidad social, salud, vida profesional y viajes.
 
               tr
                 td( style='padding-top: 10px;' )
