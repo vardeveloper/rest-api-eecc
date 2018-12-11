@@ -270,7 +270,10 @@ class EmailEC(RequestHandler):
         try:
             self.send_email(
                 [_email],
-                self.settings.get('email_subject'),
+                self.settings.get('email_subject') % (
+                    _name,
+                    data.get('fecReporte')
+                ),
                 self.render_string(
                     'mail_%s.html' % _user_type,
                     name=_name
@@ -318,7 +321,8 @@ if __name__ == '__main__':
             'profuturo_api': 'http://apiuatw.profuturo.com.pe/'
             'serviciosexternos/',
             'email_from': 'estadodecuenta@profuturo.com.pe',
-            'email_subject': 'Estado de Cuenta - Profuturo AFP'
+            'email_subject': u'%s, te enviamos tu Estado de Cuenta el '
+            u'periodo %s'
         }
     )
     application.listen(options.port, options.host, xheaders=True)
