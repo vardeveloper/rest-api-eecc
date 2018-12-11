@@ -1,0 +1,32 @@
+table( id='top', aling='center', cellpadding='0', cellspacing='0', border='0' )
+  tr
+    td
+      img.blank( src!=handler.static_url('border-white.png', _static_url),  width='310', height='1' )
+
+    td
+      img.blank( src!=handler.static_url('border-white.png', _static_url), width='130', height='1' )
+
+    td
+      img.blank( src!=handler.static_url('border-white.png', _static_url), width='80', height='1' )
+
+  tr
+    td &nbsp;
+        
+    td.social-td
+      span.social 
+        font( face="'Trebuchet MS', Helvetica, sans-serif" )
+          | S&iacute;guenos en: 
+
+    td
+      span.social-links
+        a.social-link.facebook( href='https://www.facebook.com/profuturo.afp', target='_blank' )
+          img( src=handler.static_url('facebook.jpg', _static_url), width='20', height='21', alt='facebook' )
+
+        a.social-link.twitter( href='https://twitter.com/Profuturo_AFP', target='_blank' )
+          img( src=handler.static_url('twitter.jpg', _static_url), width='20', height='21', alt='twitter' )
+
+        a.social-link.youtube( href='https://www.youtube.com/user/ProfuturoPeru', target='_blank' )
+          img( src=handler.static_url('youtube.jpg', _static_url), width='20', height='21', alt='youtube' )
+  tr
+    td( colspan='10' )
+      img.blank( src!=handler.static_url('border-white.png', _static_url),  width='100%', height='10' )

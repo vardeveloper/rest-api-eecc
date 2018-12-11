@@ -1,0 +1,50 @@
+#top {
+  text-align: left;
+  padding: 3px 0 0;
+  width: 525px;
+  margin: 0 auto;
+
+  .blank {
+    border: none;
+  }
+
+  .external-view {
+    vertical-align: middle;
+    text-align: left;
+    display: inline-block;
+    color: #6d6e71;
+    font-size: 12px;
+    
+    a {
+      color: #006db7;
+    }
+  }
+      
+  .social-td {
+    text-align: right;
+  }
+    
+  .social {
+    padding-right: 5px;
+    text-align: right;
+    display: block;
+    color: #6d6e71;
+    font-size: 12px;
+  }
+    
+  .social-links {
+    vertical-align: middle;
+    text-align: right;
+    display: inline-block;
+  }
+    
+  .social-link {
+    color: #006db7;
+    padding: 0 4px 0 0;
+    text-decoration: none;
+  }
+    
+  img {
+    border: none;
+  }
+}

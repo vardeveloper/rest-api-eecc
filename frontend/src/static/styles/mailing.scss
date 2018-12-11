@@ -1,0 +1,315 @@
+$_font_default: 'Trebuchet MS', Helvetica, sans-serif;
+$_font_safe: Verdana, Geneva, sans-serif;
+
+$_verde: #008b60;
+$_oscuro: #2f2f2f;
+
+@mixin font-default() {
+  font-family: $_font_default;
+}
+
+@mixin font-safe() {
+  font-family: $_font_default;
+}
+
+.font-default {
+  @include font-default();
+}
+
+.font-safe {
+  @include font-safe();
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #FFF;
+}
+
+table {
+  text-align: left;
+
+  img {
+    border: none;
+  }
+}
+
+a {
+  color: #006DB7;
+}
+
+@import 'mailing/_top';
+
+@import 'mailing/_new-section';
+
+// ----------------------------------------------------------------
+// layout
+// ----------------------------------------------------------------
+#m_wrap {
+  width: 572px;
+  margin: 0 auto;
+}
+
+// ----------------------------------------------------------------
+// main
+// ----------------------------------------------------------------
+#main {
+  width: 100%;
+}
+
+#content {
+  width: 524px;
+  text-align: center;
+  margin: 0 auto;
+
+  p {
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .name {
+    font-size: 26px;
+    color: #ee2a24;
+    text-align: left;
+    font-weight: 100;
+    display: block;
+    text-align: left;
+    font-weight: bold;
+    margin: 0 0 20px;
+  }
+    
+  .title {
+    text-align: left;
+    color: #ee2a24;
+    font-size: 22px;
+    line-height: 27px;
+    font-weight: 100;
+    display: block;
+    -webkit-font-smoothing: antialiased;
+    margin: 0 0 11px;
+  }
+
+  .description {
+    font-size: 16px;
+    line-height: 21px;
+    font-weight: 100;
+    display: block;
+    text-align: left;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .banner-content {
+    vertical-align: bottom;
+  }
+
+  .banner {
+    display: block;
+    margin: 0;
+    border: none;
+  }
+}
+
+#important {
+  width: 517px;
+  margin: 0 auto;
+
+  img {
+    display: block;
+    margin: 0;
+    border: none;
+  }
+
+  .left,
+  .right {
+    background-position: 0 0;
+    background-repeat: repeat-y;
+    vertical-align: top;
+    position: relative;
+
+    img {
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  }
+
+  .center {
+    p {
+      text-align: center;
+      font-size: 15px;
+      color: #2f2f2f;
+      margin: 0;
+      padding: 2px 0 2px;
+    }
+  }
+}
+
+#section_column {
+  width: 525px;
+  margin: 0 auto;
+
+  .table-description {
+    width: auto;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  img.blank {
+    display: block;
+    margin: 0;
+    border: none;
+  }
+
+  .table-title {
+    td {
+      vertical-align: middle;
+    }
+
+    .title {
+      color: #2f2f2f;
+      font-size: 14px;
+      line-height: 17px;
+      margin: 0;
+
+      a {
+        color: #2f2f2f;
+        text-decoration: none;
+      }
+    }
+  }
+
+  .table-description {
+    .description {
+      @include font-default();
+      color: #2f2f2f;
+      font-size: 12px;
+      line-height: 14px;
+      margin: 0;
+    }
+
+    img {
+      border: none;
+      display: inline-block;
+      margin: 0;
+    }
+  }
+}
+
+.table-description-li img {
+	border: none;
+	display: inline-block;
+	margin: 0;
+}
+
+.table-description-li p {
+	font-size: 12px;
+	color: #2f2f2f;
+}
+
+#section {
+	width: 524px;
+	margin: 0 auto;
+}
+
+#section p {
+	margin: 0;
+}
+
+#section .text-right {
+	text-align: right;
+}
+
+#section .red {
+	color: #ee3224;
+}
+
+#section .pink {
+	color: #e20176;
+}
+
+#section .yellow {
+	color: #faa634;
+}
+
+#section .blue {
+	color: #0181c6;
+}
+
+#section .title-section,
+#section .descrip-section {
+	display: block;
+}
+
+#section .title-section {
+	font-size: 15px;
+	font-weight: 100;
+}
+
+#section .descrip-section {
+	color: #2f2f2f;
+	font-size: 13px;
+	line-height: 16px;
+	font-weight: 100;
+}
+
+#section .section-icon {
+	text-align: center;
+}
+
+#section .section-text {
+	width: 345px;
+}
+
+#section .section-link {
+	width: 80px;
+}
+
+#attach {
+	margin: 0 auto;
+}
+
+#attach td {
+	text-align: center;
+}
+
+#attach img {
+	display: block;
+	border: none;
+	margin: 0 auto;
+}
+
+#attach .text {
+	display: block;
+	color: #ee2a24;
+	font-size: 19px;
+	line-height: 22px;
+	font-weight: 100;
+	margin: 0;
+	-webkit-font-smoothing: antialiased;
+}
+
+#footer {
+	border: none;
+	margin: 0 auto;
+	text-align: center;
+}
+
+#legal {
+	margin-top: 11px;
+	text-align: center;
+	color: #6d6e71;
+	font-size: 12px;
+}
+
+.footer {
+	margin-top: 5px;
+}

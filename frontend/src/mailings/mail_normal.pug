@@ -1,0 +1,220 @@
+extend ../partials/mailing-base
+
+block css
+  link( href!=handler.static_url('styles/mailing.css'), rel='stylesheet', type='text/css', media='all' )
+
+block main
+  - _static_url = 'static/mailing-images'
+  
+  if handler.deploy
+    - _static_url = 'https://s3.amazonaws.com/comunicaciones.profuturo.com.pe/generales/296'
+
+  include ../partials/mailing-top
+
+  block content
+    table#content( aling='center', cellpadding='0', cellspacing='0', border='0' )
+      tr
+        td
+          p.name 
+            font( face='Trebuchet MS, Arial, Helvetica, sans-serif' ) 
+              | {{name}},
+
+          p.title 
+            font( face='Trebuchet MS, Arial, Helvetica, sans-serif' )
+              | &iexcl;Recibe tu Estado
+              br
+              | de Cuenta! 
+
+          p.description 
+            font( face='Trebuchet MS, Arial, Helvetica, sans-serif' )
+              | Descarga y revisa el detalle de tu Fondo de una manera &aacute;gil.
+
+        td.banner-content
+          block banner
+            img.banner( src!=handler.static_url('main.jpg', _static_url), width='335', height='225', alt!='')
+
+      tr
+        td( colspan='2' style='vertical-align:top;' )
+          img( src!=handler.static_url('line-1.png', _static_url), width='524', height='1' style='display:block;' )
+
+    img.separator( src!=handler.static_url('border-white.png', _static_url), width='100%', height='20', alt!='')
+
+    table#important( aling='center', cellpadding='0', cellspacing='0', border='0' )
+      tr
+        td( colspan='3' )
+          block important_top
+            img( src!=handler.static_url('important-1-1.png', _static_url), width='517', height='23' )
+
+      tr
+        td.left( style='width: 16px; background-image: url(' +  handler.static_url('important-left.png', _static_url) + ')' )
+          img( src!=handler.static_url('important-left.png', _static_url), width='16', height='100%' )
+
+        td.center( style='width: 485px' )
+          block important_center
+            p 
+              font( face='Trebuchet MS, Arial, Helvetica, sans-serif' )
+                | La contrase&ntilde;a del archivo es tu n&uacute;mero de documento de identidad.
+
+        td.right( style='width: 16px; background-image: url(' +  handler.static_url('important-right.png', _static_url) + ')' )
+          img( src!=handler.static_url('important-right.png', _static_url), width='16', height='100%' )
+
+      tr
+        td( colspan='3' )
+          block important_bottom
+            img( src!=handler.static_url('important-1-2.png', _static_url), width='517', height='12' )
+
+    img.separator( src!=handler.static_url('border-white.png', _static_url), width='100%', height='23', alt!='')
+
+    table#attach( aling='center', cellpadding='0', cellspacing='0', border='0' )
+      tr
+        td
+          p.text
+            font( face='Trebuchet MS, Arial, Helvetica, sans-serif' )
+              | Mantente informado
+
+      tr
+        td
+          img( src!=handler.static_url('border-white.png', _static_url), width='100%', height='22', alt!='')
+      tr
+        td
+          block attach_bottom
+            img( src!=handler.static_url('separator-1.jpg', _static_url), width='524', height='9', alt!='')
+          
+
+    img.separator( src!=handler.static_url('border-white.png', _static_url), width='100%', height='38', alt!='')
+
+
+    block section_column
+      table#section_column( aling='center', cellpadding='0', cellspacing='0', border='0' )
+        tr
+          td( valign='top' style="width: 242px" )
+            table.table-title( aling='center', cellpadding='0', cellspacing='0', border='0' )
+              tr
+                td
+                  a( href='https://www.profuturo.com.pe', target='_blank' )
+                    img( 
+                      width='62',
+                      height='45',
+                      src!=handler.static_url('logo-site'+(custom.img_sufix || '')+'.png', _static_url), 
+                      alt='Web Profuturo'
+                    )
+
+                td( style='width:15px;' )
+                  img.blank( 
+                    width='15px',
+                    height='1px',
+                    src!=handler.static_url('border-white.png', _static_url)
+                  )
+
+                td
+                  p.title
+                    a( href='https://www.profuturo.com.pe', target='_blank' )
+                      font( face='Trebuchet MS, Arial, Helvetica, sans-serif' )
+                        | Web
+                        br
+                        | Profuturo
+
+            table.table-description( aling='center', cellpadding='0', cellspacing='0', border='0', style='width: 242px' )
+              tr
+                td
+                  p.description
+                    br
+                    font( face="Trebuchet MS, Arial, Helvetica, sans-serif" ) 
+                      | Con una navegaci&oacute;n sencilla, encontrar&aacute;s toda la informaci&oacute;n que necesitas para ti o tu empresa, si eres afiliado o pensionista.
+
+              tr
+                td( style='padding-top: 23px' )
+                  //-img( src!=handler.static_url('border-white.png', _static_url), width='100%', height='23px', alt!='')
+                  a( href="https://www.profuturo.com.pe", target="_blank", style="color: #006db7;") 
+                    img( 
+                      src!=handler.static_url("vermas"+(custom.img_sufix || '')+".png", _static_url),  
+                      width="67",
+                      height="14",
+                      alt="Ver m&aacute;s"
+                    )
+          td( style="width: 20px" )
+            img.blank( 
+              src!=handler.static_url("border-white.png", _static_url),
+              width="20",
+              height="1px",
+              alt=""
+            )
+
+          td( style="1px" )
+            img.blank( 
+              src!=handler.static_url("linea-v.jpg", _static_url),
+              width="1",
+              height="165",
+              alt=""
+            )
+
+          td( style="width: 20px" )
+            img.blank( 
+              src!=handler.static_url("border-white.png", _static_url),
+              width="20",
+              height="1",
+              alt=""
+            )
+
+          td( valign='top' style="width: 240px" )
+            table.table-title( aling='center', cellpadding='0', cellspacing='0', border='0' )
+              tr
+                td
+                  a( href='http://www.piensaprofuturo.com/', target='_blank' )
+                    img( 
+                      width='60',
+                      height='45',
+                      src!=handler.static_url('logo-blog'+(custom.img_sufix || '')+'.png', _static_url), 
+                      alt='Blog Piensa Pro Futuro'
+                    )
+
+                td( style='width:15px;' )
+                  img.blank( 
+                    width='15px',
+                    height='1',
+                    src!=handler.static_url('border-white.png', _static_url)
+                  )
+
+                td
+                  p.title
+                    a( href='http://www.piensaprofuturo.com/', target='_blank' )
+                      font( face='Trebuchet MS, Arial, Helvetica, sans-serif' )
+                        | Blog Piensa
+                        br
+                        | Pro Futuro
+
+            table.table-description( aling='center', cellpadding='0', cellspacing='0', border='0', style='width: 240px' )
+              tr
+                td
+                  p.description
+                    br
+                    font( face="Trebuchet MS, Arial, Helvetica, sans-serif" ) 
+                      | Sigue los consejos de nuestros especialistas en temas sobre AFP, experiencias de vida, responsabilidad social, salud, tecnolog&iacute;a, vida profesional y viajes.
+
+              tr
+                td( style='padding-top: 10px;' )
+                  a( href="http://www.piensaprofuturo.com/", target="_blank", style="color: #006db7;") 
+                    img( 
+                      src!=handler.static_url('vermas'+(custom.img_sufix || '')+'.png', _static_url),  
+                      width="67",
+                      height="14",
+                      alt="Ver m&aacute;s",
+                       style="border: none;"
+                    )
+
+
+    table#footer( aling='center', cellpadding='0', cellspacing='0', border='0' )
+      tr
+        td
+          img.separator( src!=handler.static_url('border-white.png', _static_url), width='100%', height='13', alt!='')
+      tr
+        td
+          a( href='http://www.profuturo.com.pe', target='_blank' )
+            block footer
+              img.footer( src!=handler.static_url('footer'+(custom.img_sufix || '')+'.png', _static_url), width='571', height='43', alt!='http://www.profuturo.com.pe')
+
+    //- p#legal 
+    //-   font( face='Trebuchet MS, Arial, Helvetica, sans-serif' ) Este correo electr&oacute;nico ha sido enviado a 
+    //-     strong #!email!#
+    //-     |  para anular tu suscripci&oacute;n haz 
+    //-     a( href='https://register.masterbase.com/v0/Profuturo/#!email!#/#!contrasena!#/anular', target='_blank' ) clic aqu&iacute;
