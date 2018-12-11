@@ -12,7 +12,7 @@
   .inner
     .title-content
       h1.title Resumen de tu cuenta en Profuturo 
-      small( style='display: inline;') (Del {{data.primerAporte}} al {{data.fecFinal}})
+      small( style='display: inline; font-size: 8pt;') (Del {{data.primerAporte}} al {{data.fecFinal}})
 
     |{% set apo_empty = { 'table_hide': 1 } %}
     |{% if data.tipoAfiliado|lower != 'v' %}
@@ -150,9 +150,8 @@
 
       tr
         td.title.small( style!="width: {{ resume_section.get('av_secondcolwidth') }}%" ) Tipo de Aporte
-          |{% if data.tipoAfiliado|lower == 'v' %}
+          br
           | Voluntario
-          |{% endif %}
 
         td.small( style!="width: {{ resume_section.get('av_colswidth') }}%" ) Tipo de Fondo
 
