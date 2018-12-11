@@ -185,6 +185,8 @@ class EmailEC(RequestHandler):
     @coroutine
     def get(self):
         _period = self.get_argument('period')
+        _email = None
+        _name = None
         try:
             datetime.strptime(_period, '%Y%m')
         except ValueError:
@@ -207,6 +209,7 @@ class EmailEC(RequestHandler):
             return
         else:
             _email = data.get('EMAIL')
+            _name = data.get('NOMBRE')
 
         try:
             req = yield self.http_client.fetch(
@@ -227,6 +230,10 @@ class EmailEC(RequestHandler):
         ok = True
         if data.get('tipoAfiliado').lower() == 'p':
             _user_type = 'premium'
+        elif data.get('tipoAfiliado').lower() == 'v':
+            _user_type = 'apv'
+        elif data.get('tipoAfiliado').lower() == 'j':
+            _user_type = 'pensionista'
         else:
             _user_type = 'normal'
 
@@ -265,7 +272,8 @@ class EmailEC(RequestHandler):
                 [_email],
                 self.settings.get('email_subject'),
                 self.render_string(
-                    'mail_%s.html' % _user_type
+                    'mail_%s.html' % _user_type,
+                    name=_name
                 ),
                 [{
                     'name': u'estadodecuenta.pdf',
