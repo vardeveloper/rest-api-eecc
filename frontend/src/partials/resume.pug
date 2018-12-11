@@ -11,7 +11,12 @@
 #resume.section
   .inner
     .title-content
-      h1.title Resumen de tu cuenta en Profuturo 
+      h1.title 
+        |{% if data.tipoAfiliado|lower == 'v' %}
+        | Resumen de tu cuenta
+        |{% else %}
+        | Resumen de tu cuenta en Profuturo 
+        |{% endif %}
       small( style='display: inline; font-size: 8pt;') (Del {{data.primerAporte}} al {{data.fecFinal}})
 
     |{% set apo_empty = { 'table_hide': 1 } %}

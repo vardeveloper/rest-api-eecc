@@ -188,8 +188,13 @@
 
       |{% if data.tipoAfiliado|lower == 'v' %}
       |{% do found_empty.update({ 'max_lines': 30 }) %}
+
+      |{% elif data.tipoAfiliado|lower == 'j' %}
+      |{% do found_empty.update({ 'max_lines': 21 }) %}
+
       |{% elif apv_empty.get('table_hide') and bono_empty.get('table_hide') %}
       |{% do found_empty.update({ 'max_lines': 24 }) %}
+
       |{% elif apv_empty.get('table_hide')  %}
       |{% do found_empty.update({ 'max_lines': 21 }) %}
       |{% endif %}

@@ -2,9 +2,8 @@
 #end
   |{% if data.tipoAfiliado|lower != 'v' %}
   #banner
-    a( href='https://www.profuturo.com.pe/profuturo-app' target='_blank' )
-      block banner
-        include banner-2
+    block banner
+      include banner-2
   |{% endif %}
 
   #nota-content(

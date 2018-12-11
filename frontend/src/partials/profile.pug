@@ -36,10 +36,19 @@
             | CUSPP
 
           td.c1.title.small( style='width: 32.17%' ) 
+            |{% if data.tipoAfiliado|lower == 'j' %}
+            | Tipo y N&uacute;mero de Documento de Identidad
+            |{% elif data.tipoAfiliado|lower == 'v' %}
+            | Tipo y N&uacute;mero de Documento
+            br
+            | de Identidad
+            |{% else %}
             | Tipo y N&uacute;mero de
             br
             | Documento de Identidad
+            |{% endif %}
 
+          |{% if data.tipoAfiliado|lower != 'j' %}
           |{% if data.tipoAfiliado|lower != 'v' %}
           td.c1.small.title( style='width: 24.9%' )
             | Esquema de 
@@ -48,9 +57,14 @@
           |{% endif %}
 
           td.c1.title.small( style='width: 21.74%' )
+            |{% if data.tipoAfiliado|lower == 'v' %}
+            | &Uacute;ltimo mes de aporte
+            |{% else %}
             | &Uacute;ltimo mes
             br
             | de aporte
+            |{% endif %}
+          |{% endif %}
         tr
           td.c1.data
             small {{data.idNss}}
@@ -58,6 +72,7 @@
           td.c1.data( style='width: 32.17%' )
             small {{data.numDocume}}
 
+          |{% if data.tipoAfiliado|lower != 'j' %}
           |{% if data.tipoAfiliado|lower != 'v' %}
           td.c1.data( style='width: 23.9%' )
             small {{data.tipoComision}}
@@ -65,6 +80,7 @@
 
           td.c1.data( style='width: 22.74%' )
             small {{data.ultMesAporte}}
+          |{% endif %}
 
       #profile-static.table
         #profile-static-header
