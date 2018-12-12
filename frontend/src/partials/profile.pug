@@ -32,10 +32,10 @@
               | {{data.desDirecc3}}
         
         tr
-          td.c1.title.small( style='width: 20.81%' )
+          td.c1.title.small( style!="width: {% if data.tipoAfiliado|lower == 'j' %}30%{% else %}20.81%{% endif %}" )
             | CUSPP
 
-          td.c1.title.small( style='width: 32.17%' ) 
+          td.c1.title.small( style!="width: {% if data.tipoAfiliado|lower == 'j' %}70%{% else %}32.17%{% endif %}" ) 
             |{% if data.tipoAfiliado|lower == 'j' %}
             | Tipo y N&uacute;mero de Documento de Identidad
             |{% elif data.tipoAfiliado|lower == 'v' %}
@@ -82,7 +82,7 @@
             small {{data.ultMesAporte}}
           |{% endif %}
 
-      #profile-static.table
+      #profile-static.table( class!="{{ data.tipoAfiliado|lower }}" )
         #profile-static-header
           span.title Tu ahorro en Profuturo
           span {{data.fecReporte}}

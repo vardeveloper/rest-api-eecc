@@ -17,7 +17,7 @@
         |{% else %}
         | Resumen de tu cuenta en Profuturo 
         |{% endif %}
-      small( style='display: inline; font-size: 8pt;') (Del {{data.primerAporte}} al {{data.fecFinal}})
+      small( style='display: inline; font-size: 9pt;') (Del {{data.primerAporte}} al {{data.fecFinal}})
 
     |{% set apo_empty = { 'table_hide': 1 } %}
     |{% if data.tipoAfiliado|lower != 'v' %}
@@ -253,8 +253,7 @@
     |{% set bono_empty = { 'table_hide': 1 } %}
     |{% if data.tipoAfiliado|lower != 'v' %}
     |{% if
-    | (data.bonoSituacion and data.bonoSituacion != '0.00') or
-    | (data.bonoNominal and data.bonoNominal != '0.00') or
+    | (data.bonoNominal and data.bonoNominal != '0.00') and
     | (data.bonoActualizado and data.bonoActualizado != '0.00')
     |%}
     |{% do bono_empty.update({ 'table_hide': 0 }) %}
