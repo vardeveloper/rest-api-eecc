@@ -186,7 +186,6 @@ class EmailEC(RequestHandler):
     def get(self):
         _period = self.get_argument('period')
         _email = None
-        _name = None
         try:
             datetime.strptime(_period, '%Y%m')
         except ValueError:
@@ -209,7 +208,6 @@ class EmailEC(RequestHandler):
             return
         else:
             _email = data.get('EMAIL')
-            _name = data.get('NOMBRE')
 
         try:
             req = yield self.http_client.fetch(
@@ -270,13 +268,16 @@ class EmailEC(RequestHandler):
         try:
             self.send_email(
                 [_email],
-                self.settings.get('email_subject'),
+                self.settings.get('email_subject') % (
+                    data.get('primerNomCliente'),
+                    data.get('fecReporte')
+                ),
                 self.render_string(
                     'mail_%s.html' % _user_type,
-                    name=_name
+                    name=data.get('primerNomCliente')
                 ),
                 [{
-                    'name': u'estadodecuenta.pdf',
+                    'name': u'%s.pdf' % data.get('idNss'),
                     'data': _data,
                     'content_type': 'application/pdf'
                 }]
@@ -318,7 +319,8 @@ if __name__ == '__main__':
             'profuturo_api': 'http://apiuatw.profuturo.com.pe/'
             'serviciosexternos/',
             'email_from': 'estadodecuenta@profuturo.com.pe',
-            'email_subject': 'Estado de Cuenta - Profuturo AFP'
+            'email_subject': u'%s, te enviamos tu Estado de Cuenta del '
+            u'periodo %s'
         }
     )
     application.listen(options.port, options.host, xheaders=True)
