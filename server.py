@@ -186,7 +186,6 @@ class EmailEC(RequestHandler):
     def get(self):
         _period = self.get_argument('period')
         _email = None
-        _name = None
         try:
             datetime.strptime(_period, '%Y%m')
         except ValueError:
@@ -209,7 +208,6 @@ class EmailEC(RequestHandler):
             return
         else:
             _email = data.get('EMAIL')
-            _name = data.get('NOMBRE')
 
         try:
             req = yield self.http_client.fetch(
@@ -271,12 +269,12 @@ class EmailEC(RequestHandler):
             self.send_email(
                 [_email],
                 self.settings.get('email_subject') % (
-                    _name,
+                    data.get('primerNomCliente'),
                     data.get('fecReporte')
                 ),
                 self.render_string(
                     'mail_%s.html' % _user_type,
-                    name=_name
+                    name=data.get('primerNomCliente')
                 ),
                 [{
                     'name': u'%s.pdf' % data.get('idNss'),
