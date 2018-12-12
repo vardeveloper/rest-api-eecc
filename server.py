@@ -319,7 +319,7 @@ if __name__ == '__main__':
             'profuturo_api': 'http://apiuatw.profuturo.com.pe/'
             'serviciosexternos/',
             'email_from': 'estadodecuenta@profuturo.com.pe',
-            'email_subject': u'%s, te enviamos tu Estado de Cuenta el '
+            'email_subject': u'%s, te enviamos tu Estado de Cuenta del '
             u'periodo %s'
         }
     )
