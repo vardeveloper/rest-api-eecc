@@ -16,18 +16,18 @@
           br
           | de Proceso
 
-        td.small.title( style='width: 11.71%;') 
+        td.small.title( style='width: 10.38%;') 
           | Mes
           br
           | de Aporte
 
-        td.small.title( style='width: 17.8%;') 
+        td.small.title( style='width: 17.86%;') 
           | Tipo de Aporte
 
         td.small.title( style='width: 18.64%;') 
           | Movimiento
 
-        td.small.title( style='width: 31.28%;') 
+        td.small.title( style='width: 32.58%;') 
           | Raz&oacute;n Social
 
         td.small.title( style='width: 10.16%' ) 
@@ -174,23 +174,13 @@
         td.small {{data.rendimientoPeriodoVsf}}
       |{% endif %}
 
-      |{% if found_empty.get('table_empty') %}
-      tr
-        td.small &nbsp;
-        td.small &nbsp;
-        td.small &nbsp;
-        td.small &nbsp;
-        td.small &nbsp;
-        td.small &nbsp;
-      |{% else %}
-
       |{% do found_empty.update({ 'max_lines': 13 }) %}
 
       |{% if data.tipoAfiliado|lower == 'v' %}
       |{% do found_empty.update({ 'max_lines': 34 }) %}
 
       |{% elif data.tipoAfiliado|lower == 'j' %}
-      |{% do found_empty.update({ 'max_lines': 29 }) %}
+      |{% do found_empty.update({ 'max_lines': 28 }) %}
 
       |{% elif apv_empty.get('table_hide') and bono_empty.get('table_hide') %}
       |{% do found_empty.update({ 'max_lines': 24 }) %}
@@ -214,6 +204,4 @@
         td.small &nbsp;
         td.small &nbsp; 
       |{% endfor %}
-      |{% endif %}
-
       |{% endif %}
