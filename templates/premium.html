@@ -81,7 +81,7 @@ data.tipoAfiliado|lower == 'v' or
 {% set bono_empty = { 'table_hide': 1 } %}
 {% if data.tipoAfiliado|lower != 'v' %}
 {% if
-(data.bonoNominal and data.bonoNominal != '0.00') and
+(data.bonoNominal and data.bonoNominal != '0.00') or
 (data.bonoActualizado and data.bonoActualizado != '0.00')
 %}
 {% do bono_empty.update({ 'table_hide': 0 }) %}<br/><table class="resume-table" id="resume-bono" cellpadding="0" cellspacing="0" border="0"><tr><td class="link-content small" rowspan="4" style="width: {{ resume_section.get('b_firstcolwidth') }}%">Conoce los t&eacute;rminos de<br/>Bono de Reconocimiento<br/><a href="https://folleteria.profuturo.com.pe/aprende-como-leer-tu-estado-de-cuenta/bono-de-reconocimiento" target="_blank">aqu&iacute;</a></td><td class="group-title title small" colspan="7">Bono de Reconocimiento</td></tr><tr><td class="small" style="width: {{ resume_section.get('b_colwidth') }}%">Situaci&oacute;n</td><td class="small" style="width: {{ resume_section.get('b_colwidth') }}%">Valor Nominal S/</td><td class="small" style="width: {{ resume_section.get('b_colwidth') }}%">Valor Actualizado S/</td></tr><tr><td class="small">{{data.bonoSituacion}}</td><td class="small">{{data.bonoNominal}}</td><td class="small">{{data.bonoActualizado}}</td></tr></table>{% endif %}

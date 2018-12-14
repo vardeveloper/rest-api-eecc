@@ -253,7 +253,7 @@
     |{% set bono_empty = { 'table_hide': 1 } %}
     |{% if data.tipoAfiliado|lower != 'v' %}
     |{% if
-    | (data.bonoNominal and data.bonoNominal != '0.00') and
+    | (data.bonoNominal and data.bonoNominal != '0.00') or
     | (data.bonoActualizado and data.bonoActualizado != '0.00')
     |%}
     |{% do bono_empty.update({ 'table_hide': 0 }) %}
