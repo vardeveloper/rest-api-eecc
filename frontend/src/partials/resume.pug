@@ -181,11 +181,13 @@
           | Actual S/
         
       |{% if 
+      | data.tipoAfiliado|lower != 'v' and (
       | (data.aporteVcf and data.aporteVcf != '0.00') or
       | (data.cargosVcf and data.cargosVcf != '0.00') or
       | (data.rendimientoVcf and data.rendimientoVcf != '0.00') or
       | (data.comisionVcf and data.comisionVcf != '0.00') or
       | (data.saldoVcf and data.saldoVcf != '0.00')
+      | )
       | %}
       |{% do apv_empty.update({ 'row': apv_empty.get('row') + 1 })  %}
       tr
