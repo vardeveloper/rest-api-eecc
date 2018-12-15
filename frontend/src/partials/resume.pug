@@ -19,9 +19,9 @@
         |{% endif %}
       small( style='display: inline; font-size: 9pt;') (Del {{data.primerAporte}} al {{data.fecFinal}})
 
-    |{% set apo_empty = { 'table_hide': 1 } %}
+    |{% set aportes_obligatorios = { 'rows': 0 } %}
     |{% if data.tipoAfiliado|lower != 'v' %}
-    |{% do apo_empty.update({ 'table_hide': 0 }) %}
+    |{% do aportes_obligatorios.update({ 'rows': 5 }) %}
     table#resume-apo.resume-table(
       cellpadding='0'
       cellspacing='0'
@@ -95,6 +95,7 @@
 
       |{% if data.tipoComision and data.tipoComision|lower == 'remuneración' %}
       |{% else %}
+      |{% do aportes_obligatorios.update({ 'rows': aportes_obligatorios.get('rows') + 2 }) %}
       tr
         td.title.small Obligatorio Afecto
 
@@ -116,7 +117,7 @@
     |{% endif %}
 
 
-    |{% set apv_empty = { 'row': 0, 'table_hide': 1 } %}
+    |{% set aportes_voluntarios = { 'rows': 0, 'items': 0 } %}
     |{% if
     | data.tipoAfiliado|lower == 'v' or
     | (
@@ -132,7 +133,7 @@
     | (data.saldoVsf and data.saldoVsf != '0.00')
     | )
     |%}
-    |{% do apv_empty.update({ 'table_hide': 0 })  %}
+    |{% do aportes_voluntarios.update({ 'rows': 4 })  %}
     table#resume-apv.resume-table(
       cellpadding='0'
       cellspacing='0'
@@ -189,7 +190,7 @@
       | (data.saldoVcf and data.saldoVcf != '0.00')
       | )
       | %}
-      |{% do apv_empty.update({ 'row': apv_empty.get('row') + 1 })  %}
+      |{% do aportes_voluntarios.update({ 'items': aportes_voluntarios.get('items') + 1 })  %}
       tr
         td.title.small Con Fin 
           br
@@ -215,7 +216,7 @@
       | (data.comisionVsf and data.comisionVsf != '0.00') or
       | (data.saldoVsf and data.saldoVsf != '0.00')
       | %}
-      |{% do apv_empty.update({ 'row': apv_empty.get('row') + 1 })  %}
+      |{% do aportes_voluntarios.update({ 'items': aportes_voluntarios.get('items') + 1 })  %}
       tr
         td.title.small Sin Fin 
           br
@@ -234,7 +235,8 @@
         td.small {{data.saldoVsf}}
       |{% endif %}
 
-      |{% if apv_empty.get('row') == 0 %}
+      |{% if aportes_voluntarios.get('items') == 0 %}
+      |{% do aportes_voluntarios.update({ 'rows': aportes_voluntarios.get('rows') + 2 }) %}
       tr
         td.title.small &nbsp;
 
@@ -249,16 +251,20 @@
         td.small &nbsp;
 
         td.small &nbsp;
+      |{% else %}
+      |{% do aportes_voluntarios.update({ 'rows': aportes_voluntarios.get('rows')  + (aportes_voluntarios.get('items') * 2) }) %}
+
       |{% endif %}
     |{% endif %}
 
-    |{% set bono_empty = { 'table_hide': 1 } %}
+    |{% set bono = { 'rows': 0 } %}
     |{% if data.tipoAfiliado|lower != 'v' %}
     |{% if
     | (data.bonoNominal and data.bonoNominal != '0.00') or
     | (data.bonoActualizado and data.bonoActualizado != '0.00')
     |%}
-    |{% do bono_empty.update({ 'table_hide': 0 }) %}
+    //- bono vale 4, y el br vale 1
+    |{% do bono.update({ 'rows': 4 + 1 }) %}
     br
     table#resume-bono.resume-table(
       cellpadding='0'

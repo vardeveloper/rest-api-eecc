@@ -33,18 +33,19 @@ Tipo y N&uacute;mero de<br/>Documento de Identidad
 Resumen de tu cuenta
 {% else %}
 Resumen de tu cuenta en Profuturo 
-{% endif %}</h1><small style="display: inline; font-size: 9pt;">(Del {{data.primerAporte}} al {{data.fecFinal}})</small></div>{% set apo_empty = { 'table_hide': 1 } %}
+{% endif %}</h1><small style="display: inline; font-size: 9pt;">(Del {{data.primerAporte}} al {{data.fecFinal}})</small></div>{% set aportes_obligatorios = { 'rows': 0 } %}
 {% if data.tipoAfiliado|lower != 'v' %}
-{% do apo_empty.update({ 'table_hide': 0 }) %}<table class="resume-table" id="resume-apo" cellpadding="0" cellspacing="0" border="0"><tr><td class="link-content small" rowspan="4" style="width: {{ resume_section.get('ao_firstcolwidth') }}%">Conoce los <br/>t&eacute;rminos de <br/>Aportes <br/>Obligatorios <br/><a href="https://folleteria.profuturo.com.pe/aprende-como-leer-tu-estado-de-cuenta/aportes-obligatorios" target="_blank">aqu&iacute;</a></td><td class="group-title title small" colspan="7">Aportes Obligatorios</td></tr><tr><td class="title small" style="width: {{ resume_section.get('ao_secondcolwidth') }}%">Tipo de Aporte</td><td class="small" style="width: {{ resume_section.get('ao_colswidth') }}%">Tipo de Fondo</td><td class="small" style="width: {{ resume_section.get('ao_colswidth') }}%">Aportes <br/>Acumulados S/</td><td class="small" style="width: {{ resume_section.get('ao_colswidth') }}%">Retiros y Cargos <br/>Acumulados S/</td><td class="small" style="width: {{ resume_section.get('ao_colswidth') }}%">Rentabilidad <br/>Acumulada S/</td>{% if data.tipoComision and data.tipoComision|lower == 'remuneración' %}
+{% do aportes_obligatorios.update({ 'rows': 5 }) %}<table class="resume-table" id="resume-apo" cellpadding="0" cellspacing="0" border="0"><tr><td class="link-content small" rowspan="4" style="width: {{ resume_section.get('ao_firstcolwidth') }}%">Conoce los <br/>t&eacute;rminos de <br/>Aportes <br/>Obligatorios <br/><a href="https://folleteria.profuturo.com.pe/aprende-como-leer-tu-estado-de-cuenta/aportes-obligatorios" target="_blank">aqu&iacute;</a></td><td class="group-title title small" colspan="7">Aportes Obligatorios</td></tr><tr><td class="title small" style="width: {{ resume_section.get('ao_secondcolwidth') }}%">Tipo de Aporte</td><td class="small" style="width: {{ resume_section.get('ao_colswidth') }}%">Tipo de Fondo</td><td class="small" style="width: {{ resume_section.get('ao_colswidth') }}%">Aportes <br/>Acumulados S/</td><td class="small" style="width: {{ resume_section.get('ao_colswidth') }}%">Retiros y Cargos <br/>Acumulados S/</td><td class="small" style="width: {{ resume_section.get('ao_colswidth') }}%">Rentabilidad <br/>Acumulada S/</td>{% if data.tipoComision and data.tipoComision|lower == 'remuneración' %}
 {% else %}<td class="small" style="width: {{ resume_section.get('ao_colswidth') }}%">Comisi&oacute;n <br/>Acumulada S/</td>{% endif %}<td class="small" style="width: {{ resume_section.get('ao_colswidth') }}%">Saldo <br/>Actual S/</td></tr><tr><td class="title small"> {% if data.tipoComision and data.tipoComision|lower == 'remuneración' %}
 Obligatorio
 {% else %}
 Obligatorio Inafecto
 {% endif %}</td><td class="small">{{data.fondoOblInaf}}</td><td class="small">{{data.aporteOblInaf}}</td><td class="small">{{data.cargosOblInaf}}</td><td class="small">{{data.rendimientoOblInaf}}</td>{% if data.tipoComision and data.tipoComision|lower == 'remuneración' %}
 {% else %}<td class="small">{{data.comisionOblInaf}}</td>{% endif %}<td class="small">{{data.saldoOblInaf}}</td></tr>{% if data.tipoComision and data.tipoComision|lower == 'remuneración' %}
-{% else %}<tr><td class="title small">Obligatorio Afecto</td><td class="small">{{data.fondoOblAfec}}</td><td class="small">{{data.aporteOblAfec}}</td><td class="small">{{data.cargosOblAfec}}</td><td class="small">{{data.rendimientoOblAfec}}</td>{% if data.tipoComision and data.tipoComision|lower == 'remuneración' %}
+{% else %}
+{% do aportes_obligatorios.update({ 'rows': aportes_obligatorios.get('rows') + 2 }) %}<tr><td class="title small">Obligatorio Afecto</td><td class="small">{{data.fondoOblAfec}}</td><td class="small">{{data.aporteOblAfec}}</td><td class="small">{{data.cargosOblAfec}}</td><td class="small">{{data.rendimientoOblAfec}}</td>{% if data.tipoComision and data.tipoComision|lower == 'remuneración' %}
 {% else %}<td class="small">{{data.comisionOblAfec}}</td>{% endif %}<td class="small">{{data.saldoOblAfec}}</td></tr>{% endif %}</table>{% endif %}
-{% set apv_empty = { 'row': 0, 'table_hide': 1 } %}
+{% set aportes_voluntarios = { 'rows': 0, 'items': 0 } %}
 {% if
 data.tipoAfiliado|lower == 'v' or
 (
@@ -60,14 +61,16 @@ data.tipoAfiliado|lower == 'v' or
 (data.saldoVsf and data.saldoVsf != '0.00')
 )
 %}
-{% do apv_empty.update({ 'table_hide': 0 })  %}<table class="resume-table" id="resume-apv" cellpadding="0" cellspacing="0" border="0"><tr><td class="link-content small" rowspan="4" style="width: {{ resume_section.get('av_firstcolwidth') }}%">Conoce los <br/>t&eacute;rminos de <br/>Aportes <br/>Voluntarios  <br/><a href="https://folleteria.profuturo.com.pe/aprende-como-leer-tu-estado-de-cuenta/aportes-voluntarios" target="_blank">aqu&iacute;</a></td><td class="group-title title small" colspan="7">Aportes Voluntarios</td></tr><tr><td class="title small" style="width: {{ resume_section.get('av_secondcolwidth') }}%">Tipo de Aporte<br/>Voluntario</td><td class="small" style="width: {{ resume_section.get('av_colswidth') }}%">Tipo de Fondo</td><td class="small" style="width: {{ resume_section.get('av_colswidth') }}%">Aportes <br/>Acumulados S/</td><td class="small" style="width: {{ resume_section.get('av_colswidth') }}%">Retiros y Cargos <br/>Acumulados S/</td><td class="small" style="width: {{ resume_section.get('av_colswidth') }}%">Rentabilidad <br/>Acumulada S/</td><td class="small" style="width: {{ resume_section.get('av_colswidth') }}%">Comisi&oacute;n <br/>Acumulada S/</td><td class="small" style="width: {{ resume_section.get('av_colswidth') }}%">Saldo <br/>Actual S/</td></tr>{% if 
+{% do aportes_voluntarios.update({ 'rows': 4 })  %}<table class="resume-table" id="resume-apv" cellpadding="0" cellspacing="0" border="0"><tr><td class="link-content small" rowspan="4" style="width: {{ resume_section.get('av_firstcolwidth') }}%">Conoce los <br/>t&eacute;rminos de <br/>Aportes <br/>Voluntarios  <br/><a href="https://folleteria.profuturo.com.pe/aprende-como-leer-tu-estado-de-cuenta/aportes-voluntarios" target="_blank">aqu&iacute;</a></td><td class="group-title title small" colspan="7">Aportes Voluntarios</td></tr><tr><td class="title small" style="width: {{ resume_section.get('av_secondcolwidth') }}%">Tipo de Aporte<br/>Voluntario</td><td class="small" style="width: {{ resume_section.get('av_colswidth') }}%">Tipo de Fondo</td><td class="small" style="width: {{ resume_section.get('av_colswidth') }}%">Aportes <br/>Acumulados S/</td><td class="small" style="width: {{ resume_section.get('av_colswidth') }}%">Retiros y Cargos <br/>Acumulados S/</td><td class="small" style="width: {{ resume_section.get('av_colswidth') }}%">Rentabilidad <br/>Acumulada S/</td><td class="small" style="width: {{ resume_section.get('av_colswidth') }}%">Comisi&oacute;n <br/>Acumulada S/</td><td class="small" style="width: {{ resume_section.get('av_colswidth') }}%">Saldo <br/>Actual S/</td></tr>{% if 
+data.tipoAfiliado|lower != 'v' and (
 (data.aporteVcf and data.aporteVcf != '0.00') or
 (data.cargosVcf and data.cargosVcf != '0.00') or
 (data.rendimientoVcf and data.rendimientoVcf != '0.00') or
 (data.comisionVcf and data.comisionVcf != '0.00') or
 (data.saldoVcf and data.saldoVcf != '0.00')
+)
 %}
-{% do apv_empty.update({ 'row': apv_empty.get('row') + 1 })  %}<tr><td class="title small">Con Fin <br/>Previsional</td><td class="small">{{data.fondoVcf}}</td><td class="small">{{data.aporteVcf}}</td><td class="small">{{data.cargosVcf}}</td><td class="small">{{data.rendimientoVcf}}</td><td class="small">{{data.comisionVcf}}</td><td class="small">{{data.saldoVcf}}</td></tr>{% endif %}
+{% do aportes_voluntarios.update({ 'items': aportes_voluntarios.get('items') + 1 })  %}<tr><td class="title small">Con Fin <br/>Previsional</td><td class="small">{{data.fondoVcf}}</td><td class="small">{{data.aporteVcf}}</td><td class="small">{{data.cargosVcf}}</td><td class="small">{{data.rendimientoVcf}}</td><td class="small">{{data.comisionVcf}}</td><td class="small">{{data.saldoVcf}}</td></tr>{% endif %}
 {% if
 (data.aporteVsf and data.aporteVsf != '0.00') or
 (data.cargosVsf and data.cargosVsf != '0.00') or
@@ -75,18 +78,21 @@ data.tipoAfiliado|lower == 'v' or
 (data.comisionVsf and data.comisionVsf != '0.00') or
 (data.saldoVsf and data.saldoVsf != '0.00')
 %}
-{% do apv_empty.update({ 'row': apv_empty.get('row') + 1 })  %}<tr><td class="title small">Sin Fin <br/>Previsional</td><td class="small">{{data.fondoVsf}}</td><td class="small">{{data.aporteVsf}}</td><td class="small">{{data.cargosVsf}}</td><td class="small">{{data.rendimientoVsf}}</td><td class="small">{{data.comisionVsf}}</td><td class="small">{{data.saldoVsf}}</td></tr>{% endif %}
-{% if apv_empty.get('row') == 0 %}<tr><td class="title small">&nbsp;</td><td class="small">&nbsp;</td><td class="small">&nbsp;</td><td class="small">&nbsp;</td><td class="small">&nbsp;</td><td class="small">&nbsp;</td><td class="small">&nbsp;</td></tr>{% endif %}</table>{% endif %}
-{% set bono_empty = { 'table_hide': 1 } %}
+{% do aportes_voluntarios.update({ 'items': aportes_voluntarios.get('items') + 1 })  %}<tr><td class="title small">Sin Fin <br/>Previsional</td><td class="small">{{data.fondoVsf}}</td><td class="small">{{data.aporteVsf}}</td><td class="small">{{data.cargosVsf}}</td><td class="small">{{data.rendimientoVsf}}</td><td class="small">{{data.comisionVsf}}</td><td class="small">{{data.saldoVsf}}</td></tr>{% endif %}
+{% if aportes_voluntarios.get('items') == 0 %}
+{% do aportes_voluntarios.update({ 'rows': aportes_voluntarios.get('rows') + 2 }) %}<tr><td class="title small">&nbsp;</td><td class="small">&nbsp;</td><td class="small">&nbsp;</td><td class="small">&nbsp;</td><td class="small">&nbsp;</td><td class="small">&nbsp;</td><td class="small">&nbsp;</td></tr>{% else %}
+{% do aportes_voluntarios.update({ 'rows': aportes_voluntarios.get('rows')  + (aportes_voluntarios.get('items') * 2) }) %}
+{% endif %}</table>{% endif %}
+{% set bono = { 'rows': 0 } %}
 {% if data.tipoAfiliado|lower != 'v' %}
 {% if
 (data.bonoNominal and data.bonoNominal != '0.00') or
 (data.bonoActualizado and data.bonoActualizado != '0.00')
 %}
-{% do bono_empty.update({ 'table_hide': 0 }) %}<br/><table class="resume-table" id="resume-bono" cellpadding="0" cellspacing="0" border="0"><tr><td class="link-content small" rowspan="4" style="width: {{ resume_section.get('b_firstcolwidth') }}%">Conoce los t&eacute;rminos de<br/>Bono de Reconocimiento<br/><a href="https://folleteria.profuturo.com.pe/aprende-como-leer-tu-estado-de-cuenta/bono-de-reconocimiento" target="_blank">aqu&iacute;</a></td><td class="group-title title small" colspan="7">Bono de Reconocimiento</td></tr><tr><td class="small" style="width: {{ resume_section.get('b_colwidth') }}%">Situaci&oacute;n</td><td class="small" style="width: {{ resume_section.get('b_colwidth') }}%">Valor Nominal S/</td><td class="small" style="width: {{ resume_section.get('b_colwidth') }}%">Valor Actualizado S/</td></tr><tr><td class="small">{{data.bonoSituacion}}</td><td class="small">{{data.bonoNominal}}</td><td class="small">{{data.bonoActualizado}}</td></tr></table>{% endif %}
+{% do bono.update({ 'rows': 4 + 1 }) %}<br/><table class="resume-table" id="resume-bono" cellpadding="0" cellspacing="0" border="0"><tr><td class="link-content small" rowspan="4" style="width: {{ resume_section.get('b_firstcolwidth') }}%">Conoce los t&eacute;rminos de<br/>Bono de Reconocimiento<br/><a href="https://folleteria.profuturo.com.pe/aprende-como-leer-tu-estado-de-cuenta/bono-de-reconocimiento" target="_blank">aqu&iacute;</a></td><td class="group-title title small" colspan="7">Bono de Reconocimiento</td></tr><tr><td class="small" style="width: {{ resume_section.get('b_colwidth') }}%">Situaci&oacute;n</td><td class="small" style="width: {{ resume_section.get('b_colwidth') }}%">Valor Nominal S/</td><td class="small" style="width: {{ resume_section.get('b_colwidth') }}%">Valor Actualizado S/</td></tr><tr><td class="small">{{data.bonoSituacion}}</td><td class="small">{{data.bonoNominal}}</td><td class="small">{{data.bonoActualizado}}</td></tr></table>{% endif %}
 {% endif %}</div></div><div class="section" id="found"><div class="inner"><div class="title-content"><h1 class="title">Movimientos de tu Fondo  </h1><small style="display: inline; font-size: 9pt;">(Del {{data.fecIniSaldoActual}} al {{data.fecFinSaldoActual}})</small></div><table class="resume-table {% if data.tipoAfiliado|lower == 'v' %}voluntary{% endif %}" id="found-table" cellpadding="0" cellspacing="0" border="0"><tr><td class="small title" style="width: 10.38%;">Fecha<br/>de Proceso</td><td class="small title" style="width: 10.38%;"> Mes<br/>de Aporte</td><td class="small title" style="width: 17.86%;"> Tipo de Aporte</td><td class="small title" style="width: 18.64%;"> Movimiento</td><td class="small title" style="width: 32.58%;"> Raz&oacute;n Social</td><td class="small title" style="width: 10.16%"> Soles</td></tr>{% set found_table_empty = 0 %}
 {% set found_table_count_rows = 0 %}
-{% set found_empty = { 'table_empty': 1, 'row': 0 } %}
+{% set found_empty = { 'table_empty': 1, 'rows': 0 } %}
 {% if data.movimientosObl and data.movimientosObl %}
 {% for item in data.movimientosObl %}
 {% if
@@ -96,7 +102,7 @@ item.tipoMovim and
 item.conceptoMovim and
 (item.montoMovim and item.montoMovim != '0.00')
 %}
-{% do found_empty.update({ 'table_empty': 0, 'row': found_empty.get('row') + 1 }) %}<tr><td class="small">{{item.fecMovim}}</td><td class="small">{{item.periodoDevengue}}</td><td class="small">{{item.tipoMovim|default('')|truncate(29, True, '')}}</td><td class="small">{{item.conceptoMovim|default('')|truncate(29, True, '')}}</td><td class="small {% if not item.razonSocial %}empty-text{% endif %}">{{item.razonSocial|default('-', True)|truncate(44, True, '')}}</td><td class="small">{{item.montoMovim}}</td></tr>{% endif %}
+{% do found_empty.update({ 'table_empty': 0, 'rows': found_empty.get('rows') + 1 }) %}<tr><td class="small">{{item.fecMovim}}</td><td class="small">{{item.periodoDevengue}}</td><td class="small">{{item.tipoMovim|default('')|truncate(29, True, '', 0)}}</td><td class="small">{{item.conceptoMovim|default('')|truncate(29, True, '', 0)}}</td><td class="small {% if not item.razonSocial %}empty-text{% endif %}">{{item.razonSocial|default('-', True)|truncate(44, True, '', 0)}}</td><td class="small">{{item.montoMovim}}</td></tr>{% endif %}
 {% endfor %}
 {% endif %}
 {% if data.movimientosVcf and data.movimientosVcf %}
@@ -108,7 +114,7 @@ item.tipoMovim and
 item.conceptoMovim and
 (item.montoMovim and item.montoMovim != '0.00')
 %}
-{% do found_empty.update({ 'table_empty': 0, 'row': found_empty.get('row') + 1 }) %}<tr><td class="small">{{item.fecMovim}}</td><td class="small">{{item.periodoDevengue}}</td><td class="small">{{item.tipoMovim|default('')|truncate(29, True, '')}}</td><td class="small">{{item.conceptoMovim|default('')|truncate(29, True, '')}}</td><td class="small {% if not item.razonSocial %}empty-text{% endif %}">{{item.razonSocial|default('-', True)|truncate(44, True, '')}}</td><td class="small">{{item.montoMovim}}</td></tr>{% endif %}
+{% do found_empty.update({ 'table_empty': 0, 'rows': found_empty.get('rows') + 1 }) %}<tr><td class="small">{{item.fecMovim}}</td><td class="small">{{item.periodoDevengue}}</td><td class="small">{{item.tipoMovim|default('')|truncate(29, True, '', 0)}}</td><td class="small">{{item.conceptoMovim|default('')|truncate(29, True, '', 0)}}</td><td class="small {% if not item.razonSocial %}empty-text{% endif %}">{{item.razonSocial|default('-', True)|truncate(44, True, '', 0)}}</td><td class="small">{{item.montoMovim}}</td></tr>{% endif %}
 {% endfor %}
 {% endif %}
 {% if data.movimientosVsf and data.movimientosVsf %}
@@ -120,7 +126,7 @@ item.tipoMovim and
 item.conceptoMovim and
 (item.montoMovim and item.montoMovim != '0.00')
 %}
-{% do found_empty.update({ 'table_empty': 0, 'row': found_empty.get('row') + 1 }) %}<tr><td class="small">{{item.fecMovim}}</td><td class="small">{{item.periodoDevengue}}</td><td class="small">{{item.tipoMovim|default('')|truncate(29, True, '')}}</td><td class="small">{{item.conceptoMovim|default('')|truncate(29, True, '')}}</td><td class="small {% if not item.razonSocial %}empty-text{% endif %}">{{item.razonSocial|default('-', True)|truncate(44, True, '')}}</td><td class="small">{{item.montoMovim}}</td></tr>{% endif %}
+{% do found_empty.update({ 'table_empty': 0, 'rows': found_empty.get('rows') + 1 }) %}<tr><td class="small">{{item.fecMovim}}</td><td class="small">{{item.periodoDevengue}}</td><td class="small">{{item.tipoMovim|default('')|truncate(29, True, '', 0)}}</td><td class="small">{{item.conceptoMovim|default('')|truncate(29, True, '', 0)}}</td><td class="small {% if not item.razonSocial %}empty-text{% endif %}">{{item.razonSocial|default('-', True)|truncate(44, True, '', 0)}}</td><td class="small">{{item.montoMovim}}</td></tr>{% endif %}
 {% endfor %}
 {% endif %}
 {% if 
@@ -130,7 +136,7 @@ data.tipoAporteOblInaf and
 data.tipoMovimOblInaf and
 (data.rendimientoPeriodoOblInaf  and data.rendimientoPeriodoOblInaf != '0.00')
 %}
-{% do found_empty.update({ 'table_empty': 0, 'row': found_empty.get('row') + 1 }) %}<tr><td class="small">{{data.fecProcesoOblInaf}}</td><td class="small">{{data.mesRentabilidadOblInaf}}</td><td class="small">{{data.tipoAporteOblInaf}}</td><td class="small">{{data.tipoMovimOblInaf}}</td><td class="small empty-text">-</td><td class="small">{{data.rendimientoPeriodoOblInaf  }}</td></tr>{% endif %}
+{% do found_empty.update({ 'table_empty': 0, 'rows': found_empty.get('rows') + 1 }) %}<tr><td class="small">{{data.fecProcesoOblInaf}}</td><td class="small">{{data.mesRentabilidadOblInaf}}</td><td class="small">{{data.tipoAporteOblInaf|default('')|truncate(29, True, '', 0)}}</td><td class="small">{{data.tipoMovimOblInaf|default('')|truncate(29, True, '', 0)}}</td><td class="small empty-text">-</td><td class="small">{{data.rendimientoPeriodoOblInaf  }}</td></tr>{% endif %}
 {% if 
 data.fecProcesoOblAfec and
 data.mesRentabilidadOblAfec and
@@ -138,7 +144,7 @@ data.tipoAporteOblAfec and
 data.tipoMovimOblAfec and
 (data.rendimientoPeriodoOblAfec and data.rendimientoPeriodoOblAfec != '0.00')
 %}
-{% do found_empty.update({ 'table_empty': 0, 'row': found_empty.get('row') + 1 }) %}<tr><td class="small">{{data.fecProcesoOblAfec}}</td><td class="small">{{data.mesRentabilidadOblAfec}}</td><td class="small">{{data.tipoAporteOblAfec}}</td><td class="small">{{data.tipoMovimOblAfec}}</td><td class="small empty-text">-</td><td class="small">{{data.rendimientoPeriodoOblAfec}}</td></tr>{% endif %}
+{% do found_empty.update({ 'table_empty': 0, 'rows': found_empty.get('rows') + 1 }) %}<tr><td class="small">{{data.fecProcesoOblAfec}}</td><td class="small">{{data.mesRentabilidadOblAfec}}</td><td class="small">{{data.tipoAporteOblAfec|default('')|truncate(29, True, '', 0)}}</td><td class="small">{{data.tipoMovimOblAfec|default('')|truncate(29, True, '', 0)}}</td><td class="small empty-text">-</td><td class="small">{{data.rendimientoPeriodoOblAfec}}</td></tr>{% endif %}
 {% if 
 data.fecProcesoCFP and
 data.mesRentabilidadCFP and
@@ -146,7 +152,7 @@ data.tipoAporteCFP and
 data.tipoMovimCFP and
 (data.rendimientoPeriodoVcf  and data.rendimientoPeriodoVcf  != '0.00')
 %}
-{% do found_empty.update({ 'table_empty': 0, 'row': found_empty.get('row') + 1 }) %}<tr><td class="small">{{data.fecProcesoCFP}}</td><td class="small">{{data.mesRentabilidadCFP}}</td><td class="small">{{data.tipoAporteCFP}}</td><td class="small">{{data.tipoMovimCFP}}</td><td class="small empty-text">-</td><td class="small">{{data.rendimientoPeriodoVcf}}</td></tr>{% endif %}
+{% do found_empty.update({ 'table_empty': 0, 'rows': found_empty.get('rows') + 1 }) %}<tr><td class="small">{{data.fecProcesoCFP}}</td><td class="small">{{data.mesRentabilidadCFP}}</td><td class="small">{{data.tipoAporteCFP|default('')|truncate(29, True, '', 0)}}</td><td class="small">{{data.tipoMovimCFP|default('')|truncate(29, True, '', 0)}}</td><td class="small empty-text">-</td><td class="small">{{data.rendimientoPeriodoVcf}}</td></tr>{% endif %}
 {% if 
 data.fecProcesoSFP  and
 data.mesRentabilidadSFP and
@@ -154,22 +160,26 @@ data.tipoAporteSFP and
 data.tipoMovimSFP and
 (data.rendimientoPeriodoVsf  and data.rendimientoPeriodoVsf != '0.00')
 %}
-{% do found_empty.update({ 'table_empty': 0, 'row': found_empty.get('row') + 1 }) %}<tr><td class="small">{{data.fecProcesoSFP}}</td><td class="small">{{data.mesRentabilidadSFP}}</td><td class="small">{{data.tipoAporteSFP}}</td><td class="small">{{data.tipoMovimSFP}}</td><td class="small empty-text">-</td><td class="small">{{data.rendimientoPeriodoVsf}}</td></tr>{% endif %}
-{% do found_empty.update({ 'max_lines': 13 }) %}
-{% if data.tipoAfiliado|lower == 'v' %}
-{% do found_empty.update({ 'max_lines': 34 }) %}
-{% elif data.tipoAfiliado|lower == 'j' %}
-{% do found_empty.update({ 'max_lines': 28 }) %}
-{% elif apv_empty.get('table_hide') and bono_empty.get('table_hide') %}
-{% do found_empty.update({ 'max_lines': 24 }) %}
-{% elif bono_empty.get('table_hide') %}
-{% do found_empty.update({ 'max_lines': 21 }) %}
-{% elif apv_empty.get('table_hide')  %}
-{% do found_empty.update({ 'max_lines': 21 }) %}
+{% do found_empty.update({ 'table_empty': 0, 'rows': found_empty.gest('rows') + 1 }) %}<tr><td class="small">{{data.fecProcesoSFP}}</td><td class="small">{{data.mesRentabilidadSFP}}</td><td class="small">{{data.tipoAporteSFP|default('')|truncate(29, True, '', 0)}}</td><td class="small">{{data.tipoMovimSFP|default('')|truncate(29, True, '', 0)}}</td><td class="small empty-text">-</td><td class="small">{{data.rendimientoPeriodoVsf}}</td></tr>{% endif %}
+{% do found_empty.update({ 'max_lines': 45 }) %}
+{% do found_empty.update({ 'max_lines': found_empty.get('max_lines') - found_empty.get('rows') }) %}
+{% do found_empty.update({ 'max_lines': found_empty.get('max_lines') - aportes_obligatorios.get('rows') }) %}
+{% do found_empty.update({ 'max_lines': found_empty.get('max_lines') - aportes_voluntarios.get('rows') }) %}
+{% do found_empty.update({ 'max_lines': found_empty.get('max_lines') - bono.get('rows') }) %}
+{% if data.tipoAfiliado|lower != 'j' and data.tipoAfiliado|lower != 'v' %}
+{% do found_empty.update({ 'max_lines': found_empty.get('max_lines') - 4 }) %}
 {% endif %}
-{% do found_empty.update({ 'max_lines': found_empty.get('max_lines') - found_empty.get('row') }) %}
+{% if data.tipoAfiliado|lower != 'v' %}
+{% do found_empty.update({ 'max_lines': found_empty.get('max_lines') - 6 }) %}
+{% endif %}
+{% if data.tipoAfiliado|lower == 'v' %}
+{% do found_empty.update({ 'max_lines': found_empty.get('max_lines') - 6 }) %}
+{% endif %}
+{% if data.tipoAfiliado|lower == 'j' %}
+{% do found_empty.update({ 'max_lines': found_empty.get('max_lines') + 1 }) %}
+{% endif %}
 {% if found_empty.get('max_lines') > 0 %}
-{% for line in range(0, found_empty.get('max_lines')) %}<tr><td class="small">&nbsp; </td><td class="small">&nbsp; </td><td class="small">&nbsp; </td><td class="small">&nbsp;</td><td class="small">&nbsp;</td><td class="small">&nbsp; </td></tr>{% endfor %}
+{% for line in range(0, found_empty.get('max_lines')) %}<tr><td class="small">&nbsp;</td><td class="small">&nbsp; </td><td class="small">&nbsp; </td><td class="small">&nbsp;</td><td class="small">&nbsp;</td><td class="small">&nbsp; </td></tr>{% endfor %}
 {% endif %}</table></div></div>{% if data.tipoAfiliado|lower != 'v' %}<div class="section-group"> {% if data.tipoAfiliado|lower != 'j' %}<div class="section" id="discount"><div class="inner"><div class="title-content"><h1 class="title">Descuentos sobre tu Remuneraci&oacute;n </h1><small style="display: inline; font-size: 9pt;">(Del {{data.fecIniSaldoActual}} al {{data.fecFinSaldoActual}})</small></div><table class="resume-table" id="discount-table" cellpadding="0" cellspacing="0" border="0"><tr><td class="small title" style="width: 25%">Prima de Seguro<sup>1</sup></td><td class="small" style="width: 25%">S/ {% if data.primaSeguroTotal %}{{data.primaSeguroTotal|default('0.00')}}{% else %}0.00{% endif %}<sup style="visibility:hidden">1</sup></td><td class="small title" style="width: 25%">Comisi&oacute;n AFP<sup style="visibility:hidden">1</sup></td><td class="small" style="width: 25%">S/ {% if data.comisionAfpTotal %}{{data.comisionAfpTotal|default('0.00')}}{% else %}0.00{% endif %}<sup style="visibility:hidden">1</sup></td></tr></table></div></div>{% endif %}<div class="section" id="resume_spp"><div class="inner"><div class="title-content"><h1 class="title">Resumen de tu cuenta en el Sistema Privado de Pensiones </h1><small style="display: inline; font-size: 9pt;">(Del {{data.fecAfiliacionSPP}} al {{data.fecFinal}})</small></div><p id="resume_spp_subtitle"><span id="icon-1"><svg id="alert-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17.58 17.6">
   <path class="cls-1" d="M15.76 3.39a12.36 12.36 0 0 1 1.1 1.9 8.71 8.71 0 0 1 .22 6.39 8.33 8.33 0 0 1-4.15 4.85A8.64 8.64 0 0 1 4 16.17c-.11-.07-.2-.16-.35-.12l-3 .85c-.12-.13 0-.26 0-.37.23-.89.46-1.78.72-2.66a.65.65 0 0 0-.09-.55A8.47 8.47 0 0 1 .15 7.27a8.49 8.49 0 0 1 5-6.47 8.75 8.75 0 0 1 10.14 2.08l.4.44.08.07zm-.17 5.39a6.73 6.73 0 1 0-6.68 6.73 6.7 6.7 0 0 0 6.68-6.73z"/>
   <path class="cls-2" d="M15.77 3.39l-.08-.07zM15.59 8.78a6.73 6.73 0 1 1-6.73-6.73 6.73 6.73 0 0 1 6.73 6.73zm-.93 0a5.8 5.8 0 1 0-5.76 5.8 5.78 5.78 0 0 0 5.76-5.81z"/>
