@@ -97,7 +97,7 @@
       tr
         td.small {{item.fecMovim}}
         td.small {{item.periodoDevengue}}
-        td.small {{item.tipoMovim|default('')|truncate(29, True, '', 0)}}
+        td.small {{item.tipoMovim|default('')|truncate(30, True, '', 0)}}
         td.small {{item.conceptoMovim|default('')|truncate(29, True, '', 0)}}
         td.small( class!="{% if not item.razonSocial %}empty-text{% endif %}" ) {{item.razonSocial|default('-', True)|truncate(44, True, '', 0)}}
         td.small {{item.montoMovim}}
