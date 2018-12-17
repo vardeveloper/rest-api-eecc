@@ -51,7 +51,7 @@
       tr
         td.small {{item.fecMovim}}
         td.small {{item.periodoDevengue}}
-        td.small {{item.tipoMovim|default('')|truncate(29, True, '', 0)}}
+        td.small {{item.tipoMovim|default('')|truncate(30, True, '', 0)}}
         td.small {{item.conceptoMovim|default('')|truncate(29, True, '', 0)}}
         td.small( class!="{% if not item.razonSocial %}empty-text{% endif %}" ) {{item.razonSocial|default('-', True)|truncate(44, True, '', 0)}}
         td.small {{item.montoMovim}}
@@ -74,7 +74,7 @@
       tr
         td.small {{item.fecMovim}}
         td.small {{item.periodoDevengue}}
-        td.small {{item.tipoMovim|default('')|truncate(29, True, '', 0)}}
+        td.small {{item.tipoMovim|default('')|truncate(30, True, '', 0)}}
         td.small {{item.conceptoMovim|default('')|truncate(29, True, '', 0)}}
         td.small( class!="{% if not item.razonSocial %}empty-text{% endif %}" ) {{item.razonSocial|default('-', True)|truncate(44, True, '', 0)}}
         td.small {{item.montoMovim}}
@@ -117,7 +117,7 @@
       tr
         td.small {{data.fecProcesoOblInaf}}
         td.small {{data.mesRentabilidadOblInaf}}
-        td.small {{data.tipoAporteOblInaf|default('')|truncate(29, True, '', 0)}}
+        td.small {{data.tipoAporteOblInaf|default('')|truncate(30, True, '', 0)}}
         td.small {{data.tipoMovimOblInaf|default('')|truncate(29, True, '', 0)}}
         td.small.empty-text -
         td.small {{data.rendimientoPeriodoOblInaf  }}
@@ -134,7 +134,7 @@
       tr
         td.small {{data.fecProcesoOblAfec}}
         td.small {{data.mesRentabilidadOblAfec}}
-        td.small {{data.tipoAporteOblAfec|default('')|truncate(29, True, '', 0)}}
+        td.small {{data.tipoAporteOblAfec|default('')|truncate(30, True, '', 0)}}
         td.small {{data.tipoMovimOblAfec|default('')|truncate(29, True, '', 0)}}
         td.small.empty-text -
         td.small {{data.rendimientoPeriodoOblAfec}}
@@ -151,7 +151,7 @@
       tr
         td.small {{data.fecProcesoCFP}}
         td.small {{data.mesRentabilidadCFP}}
-        td.small {{data.tipoAporteCFP|default('')|truncate(29, True, '', 0)}}
+        td.small {{data.tipoAporteCFP|default('')|truncate(30, True, '', 0)}}
         td.small {{data.tipoMovimCFP|default('')|truncate(29, True, '', 0)}}
         td.small.empty-text -
         td.small {{data.rendimientoPeriodoVcf}}
@@ -168,7 +168,7 @@
       tr
         td.small {{data.fecProcesoSFP}}
         td.small {{data.mesRentabilidadSFP}}
-        td.small {{data.tipoAporteSFP|default('')|truncate(29, True, '', 0)}}
+        td.small {{data.tipoAporteSFP|default('')|truncate(30, True, '', 0)}}
         td.small {{data.tipoMovimSFP|default('')|truncate(29, True, '', 0)}}
         td.small.empty-text -
         td.small {{data.rendimientoPeriodoVsf}}

@@ -103,7 +103,7 @@ item.tipoMovim and
 item.conceptoMovim and
 (item.montoMovim and item.montoMovim != '0.00')
 %}
-{% do found_empty.update({ 'table_empty': 0, 'rows': found_empty.get('rows') + 1 }) %}<tr><td class="small">{{item.fecMovim}}</td><td class="small">{{item.periodoDevengue}}</td><td class="small">{{item.tipoMovim|default('')|truncate(29, True, '', 0)}}</td><td class="small">{{item.conceptoMovim|default('')|truncate(29, True, '', 0)}}</td><td class="small {% if not item.razonSocial %}empty-text{% endif %}">{{item.razonSocial|default('-', True)|truncate(44, True, '', 0)}}</td><td class="small">{{item.montoMovim}}</td></tr>{% endif %}
+{% do found_empty.update({ 'table_empty': 0, 'rows': found_empty.get('rows') + 1 }) %}<tr><td class="small">{{item.fecMovim}}</td><td class="small">{{item.periodoDevengue}}</td><td class="small">{{item.tipoMovim|default('')|truncate(30, True, '', 0)}}</td><td class="small">{{item.conceptoMovim|default('')|truncate(29, True, '', 0)}}</td><td class="small {% if not item.razonSocial %}empty-text{% endif %}">{{item.razonSocial|default('-', True)|truncate(44, True, '', 0)}}</td><td class="small">{{item.montoMovim}}</td></tr>{% endif %}
 {% endfor %}
 {% endif %}
 {% if data.movimientosVcf and data.movimientosVcf %}
@@ -115,7 +115,7 @@ item.tipoMovim and
 item.conceptoMovim and
 (item.montoMovim and item.montoMovim != '0.00')
 %}
-{% do found_empty.update({ 'table_empty': 0, 'rows': found_empty.get('rows') + 1 }) %}<tr><td class="small">{{item.fecMovim}}</td><td class="small">{{item.periodoDevengue}}</td><td class="small">{{item.tipoMovim|default('')|truncate(29, True, '', 0)}}</td><td class="small">{{item.conceptoMovim|default('')|truncate(29, True, '', 0)}}</td><td class="small {% if not item.razonSocial %}empty-text{% endif %}">{{item.razonSocial|default('-', True)|truncate(44, True, '', 0)}}</td><td class="small">{{item.montoMovim}}</td></tr>{% endif %}
+{% do found_empty.update({ 'table_empty': 0, 'rows': found_empty.get('rows') + 1 }) %}<tr><td class="small">{{item.fecMovim}}</td><td class="small">{{item.periodoDevengue}}</td><td class="small">{{item.tipoMovim|default('')|truncate(30, True, '', 0)}}</td><td class="small">{{item.conceptoMovim|default('')|truncate(29, True, '', 0)}}</td><td class="small {% if not item.razonSocial %}empty-text{% endif %}">{{item.razonSocial|default('-', True)|truncate(44, True, '', 0)}}</td><td class="small">{{item.montoMovim}}</td></tr>{% endif %}
 {% endfor %}
 {% endif %}
 {% if data.movimientosVsf and data.movimientosVsf %}
@@ -137,7 +137,7 @@ data.tipoAporteOblInaf and
 data.tipoMovimOblInaf and
 (data.rendimientoPeriodoOblInaf  and data.rendimientoPeriodoOblInaf != '0.00')
 %}
-{% do found_empty.update({ 'table_empty': 0, 'rows': found_empty.get('rows') + 1 }) %}<tr><td class="small">{{data.fecProcesoOblInaf}}</td><td class="small">{{data.mesRentabilidadOblInaf}}</td><td class="small">{{data.tipoAporteOblInaf|default('')|truncate(29, True, '', 0)}}</td><td class="small">{{data.tipoMovimOblInaf|default('')|truncate(29, True, '', 0)}}</td><td class="small empty-text">-</td><td class="small">{{data.rendimientoPeriodoOblInaf  }}</td></tr>{% endif %}
+{% do found_empty.update({ 'table_empty': 0, 'rows': found_empty.get('rows') + 1 }) %}<tr><td class="small">{{data.fecProcesoOblInaf}}</td><td class="small">{{data.mesRentabilidadOblInaf}}</td><td class="small">{{data.tipoAporteOblInaf|default('')|truncate(30, True, '', 0)}}</td><td class="small">{{data.tipoMovimOblInaf|default('')|truncate(29, True, '', 0)}}</td><td class="small empty-text">-</td><td class="small">{{data.rendimientoPeriodoOblInaf  }}</td></tr>{% endif %}
 {% if 
 data.fecProcesoOblAfec and
 data.mesRentabilidadOblAfec and
@@ -145,7 +145,7 @@ data.tipoAporteOblAfec and
 data.tipoMovimOblAfec and
 (data.rendimientoPeriodoOblAfec and data.rendimientoPeriodoOblAfec != '0.00')
 %}
-{% do found_empty.update({ 'table_empty': 0, 'rows': found_empty.get('rows') + 1 }) %}<tr><td class="small">{{data.fecProcesoOblAfec}}</td><td class="small">{{data.mesRentabilidadOblAfec}}</td><td class="small">{{data.tipoAporteOblAfec|default('')|truncate(29, True, '', 0)}}</td><td class="small">{{data.tipoMovimOblAfec|default('')|truncate(29, True, '', 0)}}</td><td class="small empty-text">-</td><td class="small">{{data.rendimientoPeriodoOblAfec}}</td></tr>{% endif %}
+{% do found_empty.update({ 'table_empty': 0, 'rows': found_empty.get('rows') + 1 }) %}<tr><td class="small">{{data.fecProcesoOblAfec}}</td><td class="small">{{data.mesRentabilidadOblAfec}}</td><td class="small">{{data.tipoAporteOblAfec|default('')|truncate(30, True, '', 0)}}</td><td class="small">{{data.tipoMovimOblAfec|default('')|truncate(29, True, '', 0)}}</td><td class="small empty-text">-</td><td class="small">{{data.rendimientoPeriodoOblAfec}}</td></tr>{% endif %}
 {% if 
 data.fecProcesoCFP and
 data.mesRentabilidadCFP and
@@ -153,7 +153,7 @@ data.tipoAporteCFP and
 data.tipoMovimCFP and
 (data.rendimientoPeriodoVcf  and data.rendimientoPeriodoVcf  != '0.00')
 %}
-{% do found_empty.update({ 'table_empty': 0, 'rows': found_empty.get('rows') + 1 }) %}<tr><td class="small">{{data.fecProcesoCFP}}</td><td class="small">{{data.mesRentabilidadCFP}}</td><td class="small">{{data.tipoAporteCFP|default('')|truncate(29, True, '', 0)}}</td><td class="small">{{data.tipoMovimCFP|default('')|truncate(29, True, '', 0)}}</td><td class="small empty-text">-</td><td class="small">{{data.rendimientoPeriodoVcf}}</td></tr>{% endif %}
+{% do found_empty.update({ 'table_empty': 0, 'rows': found_empty.get('rows') + 1 }) %}<tr><td class="small">{{data.fecProcesoCFP}}</td><td class="small">{{data.mesRentabilidadCFP}}</td><td class="small">{{data.tipoAporteCFP|default('')|truncate(30, True, '', 0)}}</td><td class="small">{{data.tipoMovimCFP|default('')|truncate(29, True, '', 0)}}</td><td class="small empty-text">-</td><td class="small">{{data.rendimientoPeriodoVcf}}</td></tr>{% endif %}
 {% if 
 data.fecProcesoSFP  and
 data.mesRentabilidadSFP and
@@ -161,7 +161,7 @@ data.tipoAporteSFP and
 data.tipoMovimSFP and
 (data.rendimientoPeriodoVsf  and data.rendimientoPeriodoVsf != '0.00')
 %}
-{% do found_empty.update({ 'table_empty': 0, 'rows': found_empty.gest('rows') + 1 }) %}<tr><td class="small">{{data.fecProcesoSFP}}</td><td class="small">{{data.mesRentabilidadSFP}}</td><td class="small">{{data.tipoAporteSFP|default('')|truncate(29, True, '', 0)}}</td><td class="small">{{data.tipoMovimSFP|default('')|truncate(29, True, '', 0)}}</td><td class="small empty-text">-</td><td class="small">{{data.rendimientoPeriodoVsf}}</td></tr>{% endif %}
+{% do found_empty.update({ 'table_empty': 0, 'rows': found_empty.gest('rows') + 1 }) %}<tr><td class="small">{{data.fecProcesoSFP}}</td><td class="small">{{data.mesRentabilidadSFP}}</td><td class="small">{{data.tipoAporteSFP|default('')|truncate(30, True, '', 0)}}</td><td class="small">{{data.tipoMovimSFP|default('')|truncate(29, True, '', 0)}}</td><td class="small empty-text">-</td><td class="small">{{data.rendimientoPeriodoVsf}}</td></tr>{% endif %}
 {% do found_empty.update({ 'max_lines': 45 }) %}
 {% do found_empty.update({ 'max_lines': found_empty.get('max_lines') - found_empty.get('rows') }) %}
 {% do found_empty.update({ 'max_lines': found_empty.get('max_lines') - aportes_obligatorios.get('rows') }) %}
