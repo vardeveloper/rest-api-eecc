@@ -316,7 +316,7 @@ if __name__ == '__main__':
                 os.path.dirname(__file__),
                 'keys'
             ),
-            'profuturo_api': 'http://apiuatw.profuturo.com.pe/'
+            'profuturo_api': 'https://profuturomovil.com.pe/'
             'serviciosexternos/',
             'email_from': 'estadodecuenta@profuturo.com.pe',
             'email_subject': u'%s, te enviamos tu Estado de Cuenta del '
