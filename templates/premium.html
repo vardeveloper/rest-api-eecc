@@ -161,7 +161,7 @@ data.tipoAporteSFP and
 data.tipoMovimSFP and
 (data.rendimientoPeriodoVsf  and data.rendimientoPeriodoVsf != '0.00')
 %}
-{% do found_empty.update({ 'table_empty': 0, 'rows': found_empty.gest('rows') + 1 }) %}<tr><td class="small">{{data.fecProcesoSFP}}</td><td class="small">{{data.mesRentabilidadSFP}}</td><td class="small">{{data.tipoAporteSFP|default('')|truncate(30, True, '', 0)}}</td><td class="small">{{data.tipoMovimSFP|default('')|truncate(29, True, '', 0)}}</td><td class="small empty-text">-</td><td class="small">{{data.rendimientoPeriodoVsf}}</td></tr>{% endif %}
+{% do found_empty.update({ 'table_empty': 0, 'rows': found_empty.get('rows') + 1 }) %}<tr><td class="small">{{data.fecProcesoSFP}}</td><td class="small">{{data.mesRentabilidadSFP}}</td><td class="small">{{data.tipoAporteSFP|default('')|truncate(30, True, '', 0)}}</td><td class="small">{{data.tipoMovimSFP|default('')|truncate(29, True, '', 0)}}</td><td class="small empty-text">-</td><td class="small">{{data.rendimientoPeriodoVsf}}</td></tr>{% endif %}
 {% do found_empty.update({ 'max_lines': 45 }) %}
 {% do found_empty.update({ 'max_lines': found_empty.get('max_lines') - found_empty.get('rows') }) %}
 {% do found_empty.update({ 'max_lines': found_empty.get('max_lines') - aportes_obligatorios.get('rows') }) %}

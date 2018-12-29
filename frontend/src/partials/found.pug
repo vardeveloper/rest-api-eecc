@@ -164,7 +164,7 @@
       | data.tipoMovimSFP and
       | (data.rendimientoPeriodoVsf  and data.rendimientoPeriodoVsf != '0.00')
       | %}
-      |{% do found_empty.update({ 'table_empty': 0, 'rows': found_empty.gest('rows') + 1 }) %}
+      |{% do found_empty.update({ 'table_empty': 0, 'rows': found_empty.get('rows') + 1 }) %}
       tr
         td.small {{data.fecProcesoSFP}}
         td.small {{data.mesRentabilidadSFP}}
