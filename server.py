@@ -117,23 +117,19 @@ class ViewEC(RequestHandler):
     # @authenticated
     @coroutine
     def get(self):
-        _doc_number = self.get_argument('docNumber')
-        # _period = self.get_argument('period')
-        # try:
-            # datetime.strptime(_period, '%Y%m')
-        # except ValueError:
-            # raise tornado.web.HTTPError(400)
+        _period = self.get_argument('period')
+        try:
+            datetime.strptime(_period, '%Y%m')
+        except ValueError:
+            raise tornado.web.HTTPError(400)
 
         try:
-            # req = yield self.http_client.fetch(
-                # self.settings.get('profuturo_api') +
-                # 'srvpf/eecc/' +
-                # self._token.get('tipoDocumento') + '/' +
-                # self._token.get('user_name') + '/' +
-                # _period
-            # )
             req = yield self.http_client.fetch(
-                'http://127.0.0.1:8000/' + _doc_number + '.json'
+                self.settings.get('profuturo_api') +
+                'srvpf/eecc/' +
+                self._token.get('tipoDocumento') + '/' +
+                self._token.get('user_name') + '/' +
+                _period
             )
             if req.error:
                 raise tornado.httpclient.HTTPError(500)
@@ -168,9 +164,9 @@ class ViewEC(RequestHandler):
         _input_reader = PdfFileReader(_input)
         _output_writer = PdfFileWriter()
         _output_writer.appendPagesFromReader(_input_reader)
-        # _output_writer.encrypt(
-            # self._token.get('user_name').encode('utf8')
-        # )
+        _output_writer.encrypt(
+            self._token.get('user_name').encode('utf8')
+        )
         _output = StringIO()
         _output_writer.write(_output)
         _output.seek(0)
