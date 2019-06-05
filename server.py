@@ -114,7 +114,7 @@ class RequestHandler(tornado.web.RequestHandler):
 
 class ViewEC(RequestHandler):
 
-    # @authenticated
+    @authenticated
     @coroutine
     def get(self):
         _period = self.get_argument('period')
