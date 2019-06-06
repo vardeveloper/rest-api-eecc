@@ -44,6 +44,11 @@
 
 #resume-spp-table-cont {
   width: 100%;
+  border: 1px solid $color4;
+
+  td {
+    border: none;
+  }
 
   sup {
     padding: 0;
