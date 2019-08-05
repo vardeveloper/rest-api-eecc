@@ -9,6 +9,8 @@ from PyPDF2 import PdfFileReader, PdfFileWriter
 from jose import jwt, ExpiredSignatureError, JWTError
 import boto3
 from botocore.exceptions import ClientError
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine, func
 
 import os
 import functools
@@ -18,6 +20,8 @@ import urllib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
+
+import models
 
 
 def authenticated(method):
@@ -47,6 +51,11 @@ class Application(tornado.web.Application):
                  **settings):
         super(Application, self).__init__(handlers, default_host, transforms,
                                           **settings)
+        self._db_engine = create_engine(
+            self.settings.get('database_dsn'),
+            pool_recycle=3600,
+            echo=self.settings.get('debug')
+        )
         self._template_env = Environment(
             loader=FileSystemLoader(self.settings.get('template_path')),
             auto_reload=self.settings.get('debug'),
@@ -58,6 +67,7 @@ class RequestHandler(tornado.web.RequestHandler):
 
     _token = None
     _http_client = None
+    _db = None
 
     @property
     def public_key(self):
@@ -70,6 +80,26 @@ class RequestHandler(tornado.web.RequestHandler):
         if self._http_client is None or self._http_client._closed:
             self._http_client = tornado.httpclient.AsyncHTTPClient()
         return self._http_client
+
+    @property
+    def db(self):
+        if not self._db:
+            self._db = sessionmaker(bind=self.application._db_engine)()
+        return self._db
+
+    def log(self, channel, action, template, period):
+        log = models.Log()
+        log.channel = channel
+        log.action = action
+        log.template = template
+        log.period = period
+        log.ip_addr = func.INET_ATON(self.request.remote_ip)
+
+        self.db.add(log)
+        try:
+            self.db.commit()
+        except:
+            self.db.rollback()
 
     def render_string(self, template, **kwargs):
         kwargs.update({'handler': self})
@@ -111,12 +141,18 @@ class RequestHandler(tornado.web.RequestHandler):
             RawMessage={'Data': msg.as_string()}
         )
 
+    def on_finish(self):
+        if self._db:
+            self._db.close()
+            self._db = None
+
 
 class ViewEC(RequestHandler):
 
     @authenticated
     @coroutine
     def get(self):
+        _channel = self.get_argument('channel', 'none')
         _period = self.get_argument('period')
         try:
             datetime.strptime(_period, '%Y%m')
@@ -143,6 +179,18 @@ class ViewEC(RequestHandler):
             _user_type = 'premium'
         else:
             _user_type = 'normal'
+
+        _template = None
+        if data.get('tipoAfiliado').lower() == 'p':
+            _template = 'premium'
+        elif data.get('tipoAfiliado').lower() == 'v':
+            _template = 'apv'
+        elif data.get('tipoAfiliado').lower() == 'j':
+            _template = 'pensionista'
+        else:
+            _template = 'normal'
+
+        self.log(_channel, 'view', _template, _period)
 
         _input = StringIO(
             pdfkit.from_string(
@@ -184,6 +232,7 @@ class EmailEC(RequestHandler):
     @authenticated
     @coroutine
     def get(self):
+        _channel = self.get_argument('channel', 'none')
         _period = self.get_argument('period')
         _email = None
         try:
@@ -234,6 +283,8 @@ class EmailEC(RequestHandler):
             _user_type = 'pensionista'
         else:
             _user_type = 'normal'
+
+        self.log(_channel, 'email', _user_type, _period)
 
         _input = StringIO(
             pdfkit.from_string(
@@ -289,6 +340,11 @@ class EmailEC(RequestHandler):
 
 
 if __name__ == '__main__':
+    import settings
+
+    global_settings = dict((setting.lower(), getattr(settings, setting))
+                           for setting in dir(settings) if setting.isupper())
+
     define('host', default='127.0.0.1', help='host address to listen on')
     define('port', default=8888, type=int, help='port to listen on')
 
@@ -306,22 +362,7 @@ if __name__ == '__main__':
                 name='api_email'
             )
         ),
-        **{
-            'debug': False,
-            'template_path': os.path.join(
-                os.path.dirname(__file__),
-                'templates'
-            ),
-            'keys_path': os.path.join(
-                os.path.dirname(__file__),
-                'keys'
-            ),
-            'profuturo_api': 'https://profuturomovil.com.pe/'
-            'serviciosexternos/',
-            'email_from': 'estadodecuenta@profuturo.com.pe',
-            'email_subject': u'%s, te enviamos tu Estado de Cuenta del '
-            u'periodo %s'
-        }
+        **global_settings
     )
     application.listen(options.port, options.host, xheaders=True)
 
