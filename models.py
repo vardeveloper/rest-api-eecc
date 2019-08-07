@@ -6,6 +6,7 @@ from sqlalchemy import (
     Enum,
     DateTime
 )
+from sqlalchemy.dialects.mysql import INTEGER
 
 from datetime import datetime
 
@@ -26,7 +27,7 @@ class Log(Entity):
     template = Column(Enum('premium', 'apv', 'pensionista', 'normal'),
                       nullable=False)
     period = Column(Unicode(6), nullable=False)
-    ip_addr = Column(Integer, nullable=False)
+    ip_addr = Column(INTEGER(unsigned=True), nullable=False)
     created_at = Column(DateTime, nullable=False, default=datetime.now)
 
 

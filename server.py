@@ -10,7 +10,7 @@ from jose import jwt, ExpiredSignatureError, JWTError
 import boto3
 from botocore.exceptions import ClientError
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, func
 
 import os
 import functools
@@ -20,8 +20,6 @@ import urllib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
-import socket
-import struct
 
 import models
 
@@ -95,10 +93,7 @@ class RequestHandler(tornado.web.RequestHandler):
         log.action = action
         log.template = template
         log.period = period
-        log.ip_addr = struct.unpack(
-            '!L',
-            socket.inet_aton(self.request.remote_ip)
-        )[0]
+        log.ip_addr = func.INET_ATON(self.request.remote_ip)
 
         self.db.add(log)
         try:
