@@ -1,0 +1,2 @@
+- Servicio externo funciona fuera de la red de Profuturo.
+- 

@@ -1,0 +1,5 @@
+Thumbs.db
+*.pyc
+venv/
+env/
+local_settings.py

@@ -8,7 +8,7 @@ futures==3.2.0
 Jinja2==2.10
 jmespath==0.9.3
 MarkupSafe==1.1.0
-mysqlclient==1.4.2.post1
+mysql-connector-python==8.0.22
 pdfkit==0.6.1
 pyasn1==0.4.4
 PyPDF2==1.26.0
