@@ -14,7 +14,7 @@ from sqlalchemy import create_engine, func
 
 import os
 import functools
-from cStringIO import StringIO
+from io import BytesIO
 from datetime import datetime
 import urllib
 from email.mime.multipart import MIMEMultipart
@@ -32,8 +32,7 @@ def authenticated(method):
         if not _token:
             raise tornado.web.HTTPError(404)
         try:
-            self._token = jwt.decode(_token, self.public_key,
-                                     algorithms=['RS256'])
+            self._token = jwt.decode(_token, self.public_key.decode('utf-8'), algorithms=['RS256'])
             if self._token.get('tipoDocumento', None) is None or \
                     self._token.get('user_name', None) is None:
                 raise tornado.web.HTTPError(400)
@@ -150,8 +149,7 @@ class RequestHandler(tornado.web.RequestHandler):
 class ViewEC(RequestHandler):
 
     @authenticated
-    @coroutine
-    def get(self):
+    async def get(self):
         _channel = self.get_argument('channel', 'none')
         _period = self.get_argument('period')
         try:
@@ -160,7 +158,7 @@ class ViewEC(RequestHandler):
             raise tornado.web.HTTPError(400)
 
         try:
-            req = yield self.http_client.fetch(
+            req = await self.http_client.fetch(
                 self.settings.get('profuturo_api') +
                 'srvpf/eecc/' +
                 self._token.get('tipoDocumento') + '/' +
@@ -192,7 +190,7 @@ class ViewEC(RequestHandler):
 
         self.log(_channel, 'view', _template, _period)
 
-        _input = StringIO(
+        _input = BytesIO(
             pdfkit.from_string(
                 self.render_string(
                     '%s.html' % (_user_type),
@@ -213,9 +211,9 @@ class ViewEC(RequestHandler):
         _output_writer = PdfFileWriter()
         _output_writer.appendPagesFromReader(_input_reader)
         _output_writer.encrypt(
-            self._token.get('user_name').encode('utf8')
+            self._token.get('user_name')
         )
-        _output = StringIO()
+        _output = BytesIO()
         _output_writer.write(_output)
         _output.seek(0)
         _data = _output.read()
@@ -230,8 +228,7 @@ class ViewEC(RequestHandler):
 class EmailEC(RequestHandler):
 
     @authenticated
-    @coroutine
-    def get(self):
+    async def get(self):
         _channel = self.get_argument('channel', 'none')
         _period = self.get_argument('period')
         _email = None
@@ -241,7 +238,7 @@ class EmailEC(RequestHandler):
             raise tornado.web.HTTPError(400)
 
         try:
-            req = yield self.http_client.fetch(
+            req = await self.http_client.fetch(
                 self.settings.get('profuturo_api') +
                 'Home/GenClave_DatosBasico/?' +
                 urllib.urlencode({
@@ -259,7 +256,7 @@ class EmailEC(RequestHandler):
             _email = data.get('EMAIL')
 
         try:
-            req = yield self.http_client.fetch(
+            req = await self.http_client.fetch(
                 self.settings.get('profuturo_api') +
                 'srvpf/eecc/' +
                 self._token.get('tipoDocumento') + '/' +
@@ -286,7 +283,7 @@ class EmailEC(RequestHandler):
 
         self.log(_channel, 'email', _user_type, _period)
 
-        _input = StringIO(
+        _input = BytesIO(
             pdfkit.from_string(
                 self.render_string(
                     '%s.html' % (_user_type),
@@ -309,7 +306,7 @@ class EmailEC(RequestHandler):
         _output_writer.encrypt(
             self._token.get('user_name').encode('utf8')
         )
-        _output = StringIO()
+        _output = BytesIO()
         _output_writer.write(_output)
         _output.seek(0)
         _data = _output.read()
@@ -366,4 +363,4 @@ if __name__ == '__main__':
     )
     application.listen(options.port, options.host, xheaders=True)
 
-    tornado.ioloop.IOLoop.instance().start()
+    tornado.ioloop.IOLoop.current().start()
