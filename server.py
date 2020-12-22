@@ -16,7 +16,9 @@ import os
 import functools
 from io import BytesIO
 from datetime import datetime
-import urllib.request, urllib.parse, urllib.error
+import urllib.request
+import urllib.parse
+import urllib.error
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
@@ -32,7 +34,10 @@ def authenticated(method):
         if not _token:
             raise tornado.web.HTTPError(404)
         try:
-            self._token = jwt.decode(_token, self.public_key.decode('utf-8'), algorithms=['RS256'])
+            self._token = jwt.decode(
+                _token,
+                self.public_key.decode('utf-8'),
+                algorithms=['RS256'])
             if self._token.get('tipoDocumento', None) is None or \
                     self._token.get('user_name', None) is None:
                 raise tornado.web.HTTPError(400)
@@ -97,7 +102,7 @@ class RequestHandler(tornado.web.RequestHandler):
         self.db.add(log)
         try:
             self.db.commit()
-        except:
+        except Exception:
             self.db.rollback()
 
     def render_string(self, template, **kwargs):
@@ -107,7 +112,8 @@ class RequestHandler(tornado.web.RequestHandler):
 
     def get_param(self, container, group_type):
         try:
-            return list([x for x in container.get('mensajes') if x.get('grupoMensaje', '') == group_type])[0].get('mensajes')
+            return list([x for x in container.get('mensajes') if x.get(
+                'grupoMensaje', '') == group_type])[0].get('mensajes')
         except IndexError:
             return None
 
