@@ -16,7 +16,7 @@ import os
 import functools
 from io import BytesIO
 from datetime import datetime
-import urllib
+import urllib.request, urllib.parse, urllib.error
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
@@ -107,10 +107,7 @@ class RequestHandler(tornado.web.RequestHandler):
 
     def get_param(self, container, group_type):
         try:
-            return list(filter(
-                lambda x: x.get('grupoMensaje', '') == group_type,
-                container.get('mensajes')
-            ))[0].get('mensajes')
+            return list([x for x in container.get('mensajes') if x.get('grupoMensaje', '') == group_type])[0].get('mensajes')
         except IndexError:
             return None
 
@@ -241,7 +238,7 @@ class EmailEC(RequestHandler):
             req = await self.http_client.fetch(
                 self.settings.get('profuturo_api') +
                 'Home/GenClave_DatosBasico/?' +
-                urllib.urlencode({
+                urllib.parse.urlencode({
                     'tipoDocumento': self._token.get('tipoDocumento'),
                     'numeroDocumento': self._token.get('user_name')
                 })
@@ -325,7 +322,7 @@ class EmailEC(RequestHandler):
                     name=data.get('primerNomCliente')
                 ),
                 [{
-                    'name': u'%s.pdf' % data.get('idNss'),
+                    'name': '%s.pdf' % data.get('idNss'),
                     'data': _data,
                     'content_type': 'application/pdf'
                 }]
